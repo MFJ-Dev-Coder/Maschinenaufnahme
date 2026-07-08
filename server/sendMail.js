@@ -9,10 +9,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import dns from "dns";
 
-    dns.setDefaultResultOrder("ipv4first");
-
-
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -226,34 +222,29 @@ app.post("/sendMail", upload.any(), async (req, res) => {
       });
     }
 
-    doc.end();
 
-    await new Promise(
-      (resolve, reject) => {
-        stream.on(
-          "finish",
-          resolve
-        );
+doc.end();
 
-        stream.on(
-          "error",
-          reject
-        );
-      }
-    );
+await new Promise((resolve, reject) => {
+  stream.on("finish", resolve);
+  stream.on("error", reject);
+});
 
-    console.log(
-      "✅ PDF fertig erstellt"
-    );
+console.log("✅ PDF fertig erstellt");
 
+dns.setDefaultResultOrder("ipv4first");
 
- cconst transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: "outlook.office365.com",
   port: 587,
   secure: false,
   requireTLS: true,
 
   family: 4,
+
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
 
   auth: {
     user: process.env.SMTP_USER,
@@ -262,32 +253,28 @@ app.post("/sendMail", upload.any(), async (req, res) => {
 });
 
 console.log("📧 Starte Mailversand...");
-console.log("SMTP:", process.env.SMTP_HOST);
 
+await transporter.sendMail({
+  from: process.env.SMTP_USER,
+  to: process.env.MAIL_TO,
 
-    
-    await transporter.sendMail({
-      from:
-        process.env.SMTP_USER,
-      to: process.env.MAIL_TO,
-      subject:
-        "Geräteaufnahme (PDF)",
-      text:
-        "Die Checkliste befindet sich im Anhang.",
-      attachments: [
-        {
-          filename:
-            path.basename(
-              pdfPath
-            ),
-          path: pdfPath
-        }
-      ]
-    });
+  subject: `Geräteaufnahme ${internnummer}`,
 
-    console.log(
-      "✅ Mail gesendet"
-    );
+  text: "Die Checkliste befindet sich im Anhang.",
+
+  attachments: [
+    {
+      filename: path.basename(pdfPath),
+      path: pdfPath
+    }
+  ]
+});
+
+console.log("✅ Mail gesendet");
+
+res.json({
+  success: true
+});
 
     res.json({
       success: true
