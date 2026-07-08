@@ -45,6 +45,16 @@ const upload = multer({ storage });
 
 app.use(express.json());
 app.use(cors());
+
+app.get("/api/health", (req, res) => {
+  console.log(
+    "KEEP ALIVE PING",
+    new Date().toISOString()
+  );
+
+  res.status(200).send("OK");
+});
+
 app.use(
   express.static(
     path.join(__dirname, "../dist")
