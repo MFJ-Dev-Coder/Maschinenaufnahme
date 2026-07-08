@@ -7,6 +7,7 @@ import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import dns from "dns";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -241,11 +242,16 @@ app.post("/sendMail", upload.any(), async (req, res) => {
       "✅ PDF fertig erstellt"
     );
 
-    const transporter = nodemailer.createTransport({
-  host: "smtp.office365.com",
+    dns.setDefaultResultOrder("ipv4first");
+
+ const transporter = nodemailer.createTransport({
+  host: "outlook.office365.com",
   port: 587,
   secure: false,
   requireTLS: true,
+
+  family: 4,
+
   connectionTimeout: 30000,
   greetingTimeout: 30000,
   socketTimeout: 30000,
