@@ -145,7 +145,7 @@ if (missingRequired.length > 0) {
         }
       });
 
-      const response = await fetch("http://localhost:3001/sendMail", {
+      const response = await fetch("/sendMail", {
         method: "POST",
         body: formData
       });
