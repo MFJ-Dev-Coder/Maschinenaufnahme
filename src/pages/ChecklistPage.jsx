@@ -146,13 +146,20 @@ export default function ChecklistPage() {
     }
 
     const requiredImages = [
-      "Typenschild",
-      "Mastnummer",
-      "Motornummer",
-      "Mastansicht",
-      "Reifen vorne",
-      "Reifen hinten"
-    ];
+  "Typenschild",
+  "Mastnummer",
+  "Motornummer",
+  "Mastansicht",
+  "Reifen vorne",
+  "Reifen hinten"
+];
+
+if (
+  categoryId === "lagertechnik" ||
+  categoryId === "elektro"
+) {
+  requiredImages.push("Batterietypenschild");
+}
 
     const missingImages =
       requiredImages.filter(
@@ -368,11 +375,27 @@ export default function ChecklistPage() {
     </section>
   );
 
+  const imageFields = [
+  "Typenschild",
+  "Mastnummer",
+  "Motornummer",
+  "Mastansicht",
+  "Reifen vorne",
+  "Reifen hinten"
+];
+
+if (
+  categoryId === "lagertechnik" ||
+  categoryId === "elektro"
+) {
+  imageFields.push("Batterietypenschild");
+}
+
   const renderImages = () => (
     <section className="card">
       <h2>Bilder</h2>
 
-      {["Typenschild", "Mastnummer", "Motornummer", "Mastansicht", "Reifen vorne", "Reifen hinten"].map(key => (
+      {imageFields.map(key => (
         <label key={key} className="field">
           <span>
   {key}
