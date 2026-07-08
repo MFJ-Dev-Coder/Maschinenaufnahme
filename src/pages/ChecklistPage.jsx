@@ -6,26 +6,28 @@ import SignatureCanvas from "react-signature-canvas";
 
 export default function ChecklistPage() {
   const { category } = useParams();
+  const categoryId = category;
+  const selectedCategory = CHECKLIST_CATEGORIES[category];
 
-  const [data, setData] = useState({});
+  useEffect(() => {
+    console.log("Keep-Alive gestartet");
 
-useEffect(() => {
-  console.log("Keep-Alive gestartet");
+    const interval = setInterval(() => {
+      console.log("Sende Keep-Alive");
 
-  const interval = setInterval(() => {
-    console.log("Sende Keep-Alive");
+      fetch("/api/health")
+        .then(() => console.log("Keep-Alive erfolgreich"))
+        .catch(console.error);
+    }, 30000);
 
-    fetch("/api/health")
-      .then(() => console.log("Keep-Alive erfolgreich"))
-      .catch(console.error);
-  }, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
-  return () => clearInterval(interval);
-}, []);
+  if (!selectedCategory) {
+    return <div>Kategorie nicht gefunden.</div>;
+  }
 
-  if (!category) return <div>Kategorie nicht gefunden.</div>;
-
-  const schema = category.schema;
+  const schema = selectedCategory.schema;
   
   // ✅ META
   const [meta, setMeta] = useState(
@@ -497,7 +499,7 @@ if (
     <div className="page">
 
       <header className="header">
-        <h1>{category.title}</h1>
+        <h1>{selectedCategory.title}</h1>
         <p>{category.description}</p>
       </header>
 
