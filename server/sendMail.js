@@ -245,16 +245,16 @@ app.post("/sendMail", upload.any(), async (req, res) => {
     dns.setDefaultResultOrder("ipv4first");
 
  const transporter = nodemailer.createTransport({
-  host: "outlook.office365.com",
+  host: "smtp.office365.com",
   port: 587,
   secure: false,
   requireTLS: true,
-
+    
   family: 4,
 
-  connectionTimeout: 30000,
-  greetingTimeout: 30000,
-  socketTimeout: 30000,
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
 
   auth: {
     user: process.env.SMTP_USER,
@@ -262,12 +262,11 @@ app.post("/sendMail", upload.any(), async (req, res) => {
   }
 });
 
-console.log("SMTP Verbindung wird geprüft...");
+console.log("📧 Starte Mailversand...");
+console.log("SMTP:", process.env.SMTP_HOST);
 
-await transporter.verify();
 
-console.log("✅ SMTP Verbindung erfolgreich");
-
+    
     await transporter.sendMail({
       from:
         process.env.SMTP_USER,
