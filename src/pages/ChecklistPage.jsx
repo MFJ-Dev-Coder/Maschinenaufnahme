@@ -5,23 +5,32 @@ import { CHECKLIST_CATEGORIES } from "../config/checklists.js";
 import SignatureCanvas from "react-signature-canvas";
 
 export default function ChecklistPage() {
-  const { category } = useParams();
-  const categoryId = category;
-  const selectedCategory = CHECKLIST_CATEGORIES[category];
+const { category } = useParams();
+const categoryId = category;
 
-  useEffect(() => {
-    console.log("Keep-Alive gestartet");
+// Zugriff auf die Konfiguration wiederherstellen
+const selectedCategory = CHECKLIST_CATEGORIES?.[category];
 
-    const interval = setInterval(() => {
-      console.log("Sende Keep-Alive");
+if (!selectedCategory) {
+  return <div>Kategorie nicht gefunden.</div>;
+}
 
+const schema = selectedCategory.schema;
+
+ useEffect(() => {
+  console.log("Keep-Alive gestartet");
+
+  const interval = setInterval(() => {
+    if (!document.hidden) {
       fetch("/api/health")
         .then(() => console.log("Keep-Alive erfolgreich"))
         .catch(console.error);
-    }, 30000);
+    }
+  }, 5 * 60 * 1000); // 5 Minuten
 
-    return () => clearInterval(interval);
-  }, []);
+  return () => clearInterval(interval);
+}, []);
+``
 
   if (!selectedCategory) {
     return <div>Kategorie nicht gefunden.</div>;
