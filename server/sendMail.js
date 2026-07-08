@@ -34,6 +34,10 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("Mailserver läuft");
+});
+
 app.post("/sendMail", upload.any(), async (req, res) => {
   try {
     console.log("✅ SERVER LÄUFT (PDF MODE)");
