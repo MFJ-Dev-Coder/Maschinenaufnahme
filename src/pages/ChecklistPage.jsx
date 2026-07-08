@@ -158,7 +158,7 @@ if (
   categoryId === "lagertechnik" ||
   categoryId === "elektro"
 ) {
-  requiredImages.push("Batterietypenschild");
+  requiredImages.push("Batterie");
 }
 
     const missingImages =
