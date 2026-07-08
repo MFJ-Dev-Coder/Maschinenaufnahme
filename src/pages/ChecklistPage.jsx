@@ -388,7 +388,7 @@ if (
   categoryId === "lagertechnik" ||
   categoryId === "elektro"
 ) {
-  imageFields.push("Batterietypenschild");
+  imageFields.push("Batterie");
 }
 
   const renderImages = () => (
