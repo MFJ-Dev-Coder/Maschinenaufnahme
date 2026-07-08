@@ -4,44 +4,35 @@ import { useState, useEffect, useRef } from "react";
 import { CHECKLIST_CATEGORIES } from "../config/checklists.js";
 import SignatureCanvas from "react-signature-canvas";
 
-export default function ChecklistPage() {
-const { category } = useParams();
-const categoryId = category;
+eexport default function ChecklistPage() {
+  const { category } = useParams();
+  const categoryId = category;
 
-// Zugriff auf die Konfiguration wiederherstellen
-const selectedCategory = CHECKLIST_CATEGORIES?.[category];
+  const selectedCategory = CHECKLIST_CATEGORIES[category];
 
-if (!selectedCategory) {
-  return <div>Kategorie nicht gefunden.</div>;
-}
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!document.hidden) {
+        fetch("/api/health").catch(console.error);
+      }
+    }, 5 * 60 * 1000); // 5 Minuten
 
-const schema = selectedCategory.schema;
-
- useEffect(() => {
-  console.log("Keep-Alive gestartet");
-
-  const interval = setInterval(() => {
-    if (!document.hidden) {
-      fetch("/api/health")
-        .then(() => console.log("Keep-Alive erfolgreich"))
-        .catch(console.error);
-    }
-  }, 5 * 60 * 1000); // 5 Minuten
-
-  return () => clearInterval(interval);
-}, []);
-``
+    return () => clearInterval(interval);
+  }, []);
 
   if (!selectedCategory) {
     return <div>Kategorie nicht gefunden.</div>;
   }
 
   const schema = selectedCategory.schema;
-  
+
   // ✅ META
   const [meta, setMeta] = useState(
-    Object.fromEntries(schema.meta.fields.map(f => [f.id, ""]))
+    Object.fromEntries(
+      schema.meta.fields.map(f => [f.id, ""])
+    )
   );
+``
 
   // ✅ SECTIONS (Design + Status Buttons behalten!)
   const [sections, setSections] = useState(
