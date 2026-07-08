@@ -26,11 +26,6 @@ useEffect(() => {
   if (!category) return <div>Kategorie nicht gefunden.</div>;
 
   const schema = category.schema;
-
-  const [meta, setMeta] = useState(
-    Object.fromEntries(schema.meta.fields.map(f => [f.id, ""]))
-  );
-
   
   // ✅ META
   const [meta, setMeta] = useState(
