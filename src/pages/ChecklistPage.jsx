@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { CHECKLIST_CATEGORIES } from "../config/checklists.js";
 import SignatureCanvas from "react-signature-canvas";
 
-eexport default function ChecklistPage() {
+export default function ChecklistPage() {
   const { category } = useParams();
   const categoryId = category;
 
