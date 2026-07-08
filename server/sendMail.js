@@ -298,12 +298,6 @@ console.log("✅ SMTP Verbindung erfolgreich");
     error: "Mailversand fehlgeschlagen"
   });
 }
-
-    res.status(500).json({
-      error:
-        "Mailversand fehlgeschlagen"
-    });
-  }
 });
 
 // React SPA Fallback
