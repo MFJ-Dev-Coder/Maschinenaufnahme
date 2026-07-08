@@ -7,9 +7,9 @@ export const CHECKLIST_CATEGORIES = {
     schema: {
       meta: {
         fields: [
-          { id: "kunde", label: "Kunde" },
+          { id: "Kunde", label: "Kunde" },
           { id: "Arbeitsauftrag", label: "Arbeitsauftrag"},
-          { id: "hersteller",
+          { id: "Hersteller",
             label: "Hersteller",
             type: "select",
             options: [
@@ -23,7 +23,7 @@ export const CHECKLIST_CATEGORIES = {
           },
           
           {
-            id: "typ",
+            id: "Typ",
             label: "Typ",
             type: "select",
             dependsOn: "hersteller",
