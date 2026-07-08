@@ -32,9 +32,9 @@ const storage = multer.diskStorage({
       const ext = path.extname(file.originalname);
 
       cb(
-        null,
-        `${file.fieldname}_${internnummer}${ext}`
-      );
+  null,
+  `${file.fieldname}_${internnummer}`
+);
     } catch {
       cb(null, file.originalname);
     }
