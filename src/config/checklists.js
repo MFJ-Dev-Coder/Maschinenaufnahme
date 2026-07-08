@@ -526,8 +526,8 @@ meta: {
             { label: "Zündschloss" },
             { label: "Hupe" },
             { label: "Scheibenwischer" },
-            { label: "Display- Datum % Uhrzeit einstellen", required: true },
-            { label: "Servicecode", required: true },
+            { label: "Display- Datum & Uhrzeit einstellen", required: true },
+            { label: "Verwendeter Servicecode", required: true },
             { label: "Beleuchtungsanlage", required: true }
           ]
         },
@@ -769,8 +769,8 @@ meta: {
             { label: "Zündschloss" },
             { label: "Hupe" },
             { label: "Scheibenwischer" },
-            { label: "Display- Datum % Uhrzeit einstellen", required: true },
-            { label: "Servicecode", required: true },
+            { label: "Display- Datum & Uhrzeit einstellen", required: true },
+            { label: "Verwendeter Servicecode", required: true },
             { label: "Beleuchtungsanlage", required: true }
           ]
         },
