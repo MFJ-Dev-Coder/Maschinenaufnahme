@@ -393,6 +393,7 @@ if (missingImages.length > 0) {
         <option value="Marcel Schindler">Marcel Schindler</option>
         <option value="Alin Costin">Alin Costin</option>
         <option value="Tamara Bühler">Tamara Bühler</option>
+        <option value="Marco Fischer-Jung">Marco Fischer-Jung</option>
       </select>
     </section>
   );
