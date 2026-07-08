@@ -258,7 +258,8 @@ export const CHECKLIST_CATEGORIES = {
             { label: "Bremsen bei leichter Steigung" },
             { label: "Lenkung während Probefahrt" },
             { label: "Hub ohne Last" },
-            { label: "Funktionstest", required: true }
+            { label: "Funktionstest", required: true },
+            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true }
           ]
         }
       ]
@@ -539,7 +540,8 @@ meta: {
             { label: "Bremsen bei leichter Steigung" },
             { label: "Lenkung während Probefahrt" },
             { label: "Hub ohne Last" },
-            { label: "Funktionstest", required: true }
+            { label: "Funktionstest", required: true },
+            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true }
           ]
         }
       ]
@@ -781,7 +783,8 @@ meta: {
             { label: "Bremsen bei leichter Steigung" },
             { label: "Lenkung während Probefahrt" },
             { label: "Hub ohne Last" },
-            { label: "Funktionstest", required: true }
+            { label: "Funktionstest", required: true },
+            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true }
           ]
         }
       ]
