@@ -38,7 +38,7 @@ export default function ChecklistPage() {
 
   const [remarks, setRemarks] = useState("");
   const [technician, setTechnician] = useState("");
-
+  const [isSending, setIsSending] = useState(false);
   // ✅ ✅ NEU: BILDER
   const [images, setImages] = useState({});
   const technicianSignatureRef = useRef(null);
@@ -100,131 +100,161 @@ export default function ChecklistPage() {
 
   // ✅ SUBMIT (JETZT MIT FORM DATA + DESIGN)
   const handleSubmit = async () => {
-    try {
-      const formData = new FormData();
 
-      const payload = {
-        meta,
-        sections,
-        decisions,
-        remarks,
-        technician,
-      
-        signatures: {
-          techniker:
-            technicianSignatureRef.current
-              ?.getCanvas()
-              .toDataURL("image/png")
+  if (isSending) return;
+
+  setIsSending(true);
+
+  try {
+
+    const missingRequired = [];
+
+    sections.forEach(section => {
+      section.items.forEach(item => {
+        if (item.required && !item.status) {
+          missingRequired.push(item.label);
         }
-      };
-      
-      const missingRequired = [];
+      });
+    });
 
-sections.forEach(section => {
-  section.items.forEach(item => {
-    if (item.required && !item.status) {
-      missingRequired.push(item.label);
+    if (missingRequired.length > 0) {
+      alert(
+        "Folgende Pflichtfelder müssen bearbeitet werden:\n\n" +
+        missingRequired.join("\n")
+      );
+      return;
     }
-  });
-});
 
-if (missingRequired.length > 0) {
-  alert(
-    "Folgende Pflichtfelder müssen bearbeitet werden:\n\n" +
-    missingRequired.join("\n")
-  );
-  return;
-}
-      
+    const missingMetaFields = [];
 
-      formData.append("data", JSON.stringify(payload));
+    schema.meta.fields.forEach(field => {
+      if (
+        field.required &&
+        (!meta[field.id] ||
+          meta[field.id].trim() === "")
+      ) {
+        missingMetaFields.push(field.label);
+      }
+    });
 
-      Object.entries(images).forEach(([key, file]) => {
+    if (missingMetaFields.length > 0) {
+      alert(
+        "Folgende Gerätedaten fehlen:\n\n" +
+        missingMetaFields.join("\n")
+      );
+      return;
+    }
+
+    const requiredImages = [
+      "Typenschild",
+      "Mastnummer",
+      "Motornummer",
+      "Mastansicht",
+      "Reifen vorne",
+      "Reifen hinten"
+    ];
+
+    const missingImages =
+      requiredImages.filter(
+        image => !images[image]
+      );
+
+    if (missingImages.length > 0) {
+      alert(
+        "Folgende Pflichtbilder fehlen:\n\n" +
+        missingImages.join("\n")
+      );
+      return;
+    }
+
+    const formData = new FormData();
+
+    const payload = {
+      meta,
+      sections,
+      decisions,
+      remarks,
+      technician,
+
+      signatures: {
+        techniker:
+          technicianSignatureRef.current
+            ?.getCanvas()
+            .toDataURL("image/png")
+      }
+    };
+
+    formData.append(
+      "data",
+      JSON.stringify(payload)
+    );
+
+    Object.entries(images).forEach(
+      ([key, file]) => {
         if (file) {
           formData.append(key, file);
         }
-      });
+      }
+    );
 
-      const response = await fetch("/sendMail", {
+    const response = await fetch(
+      "/sendMail",
+      {
         method: "POST",
         body: formData
-      });
-
-      if (!response.ok) {
-        const text = await response.text();
-        alert("Fehler: " + text);
-        return;
       }
+    );
 
-      const missingMetaFields = [];
+    if (!response.ok) {
+      const text =
+        await response.text();
 
-schema.meta.fields.forEach(field => {
-  if (
-    field.required &&
-    (!meta[field.id] || meta[field.id].trim() === "")
-  ) {
-    missingMetaFields.push(field.label);
-  }
-});
-
-if (missingMetaFields.length > 0) {
-  alert(
-    "Folgende Gerätedaten fehlen:\n\n" +
-    missingMetaFields.join("\n")
-  );
-  return;
-}
-
-const requiredImages = [
-  "Typenschild",
-  "Mastnummer",
-  "Motornummer",
-  "Mastansicht",
-  "Reifen vorne",
-  "Reifen hinten"
-];
-
-const missingImages = requiredImages.filter(
-  image => !images[image]
-);
-
-if (missingImages.length > 0) {
-  alert(
-    "Folgende Pflichtbilder fehlen:\n\n" +
-    missingImages.join("\n")
-  );
-  return;
-}
-      alert("✅ Checkliste erfolgreich gesendet!");
-
-      // ✅ RESET
-      setMeta(Object.fromEntries(schema.meta.fields.map(f => [f.id, ""])));
-
-      setSections(
-        schema.sections.map(section => ({
-          title: section.title,
-          items: section.items.map(item => ({
-            label: typeof item === "string" ? item : item.label,
-            required: item.required || false,
-            status: null,
-            value: ""
-          }))
-        }))
-      );
-
-
-      setRemarks("");
-
-      setImages({});
-
-      setTechnician("");
-      technicianSignatureRef.current?.clear();
-
-    } catch (err) {
-      console.error(err);
-      alert("Fehler beim Senden.");
+      alert("Fehler: " + text);
+      return;
     }
-  };
+
+    alert(
+      "✅ Checkliste erfolgreich gesendet!"
+    );
+
+    // RESET
+    setMeta(
+      Object.fromEntries(
+        schema.meta.fields.map(
+          f => [f.id, ""]
+        )
+      )
+    );
+
+    setSections(
+      schema.sections.map(section => ({
+        title: section.title,
+        items: section.items.map(item => ({
+          label:
+            typeof item === "string"
+              ? item
+              : item.label,
+          required:
+            item.required || false,
+          status: null,
+          value: ""
+        }))
+      }))
+    );
+
+    setRemarks("");
+    setImages({});
+    setTechnician("");
+
+    technicianSignatureRef.current?.clear();
+
+  } catch (err) {
+    console.error(err);
+    alert("Fehler beim Senden.");
+  } finally {
+    setIsSending(false);
+  }
+};
 
   // ✅ ✅ UI BLEIBT DESIGN (nur erweitert)
 
@@ -445,9 +475,15 @@ if (missingImages.length > 0) {
       {renderImages()}
 
       <section className="card card--actions">
-        <button className="button button--primary" onClick={handleSubmit}>
-          Checkliste abschließen
-        </button>
+       <button
+  className="button button--primary"
+  onClick={handleSubmit}
+  disabled={isSending}
+>
+  {isSending
+    ? "Wird gesendet..."
+    : "Checkliste abschließen"}
+</button>
       </section>
 
     </div>
