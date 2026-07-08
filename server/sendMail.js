@@ -23,10 +23,16 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     try {
       const data = JSON.parse(req.body.data);
-      const internnummer =  meta?.internnummer || "unknown";
+
+      const internnummer =
+        data?.meta?.internnummer || "unknown";
+
       const ext = path.extname(file.originalname);
 
-      cb(null, `${file.fieldname}_${internnummer}${ext}`);
+      cb(
+        null,
+        `${file.fieldname}_${internnummer}${ext}`
+      );
     } catch {
       cb(null, file.originalname);
     }
@@ -44,21 +50,12 @@ app.use(
   )
 );
 
-app.get("/*", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../dist/index.html")
-  );
-});
-
-app.get("/", (req, res) => {
-  res.send("Mailserver läuft");
-});
-
 app.post("/sendMail", upload.any(), async (req, res) => {
   try {
     console.log("✅ SERVER LÄUFT (PDF MODE)");
 
     const data = JSON.parse(req.body.data);
+
     const {
       meta,
       sections,
@@ -66,162 +63,255 @@ app.post("/sendMail", upload.any(), async (req, res) => {
       technician,
       signatures
     } = data;
-    
-    // ✅ Dateiname
-    const internnummer = meta?.internnummer || "unknown";
-    const date = new Date().toISOString().slice(0, 10);
 
-    
-const pdfPath =`uploads/checkliste_${geraetenummer}_${internnummer}_${date}.pdf`;
+    const internnummer =
+      meta?.internnummer || "unknown";
 
+    const date = new Date()
+      .toISOString()
+      .slice(0, 10);
 
-    // ✅ PDF erstellen
+    const pdfPath =
+      `uploads/checkliste_${internnummer}_${date}.pdf`;
+
     const doc = new PDFDocument();
 
     const stream = fs.createWriteStream(pdfPath);
 
-    // ✅ WICHTIG: Fehler handling am Stream
     stream.on("error", (err) => {
-      console.error("❌ PDF Stream Fehler:", err);
+      console.error(
+        "❌ PDF Stream Fehler:",
+        err
+      );
     });
 
     doc.pipe(stream);
 
-    // --- PDF Inhalt ---
-    doc.fontSize(18).text("Geräteaufnahme", { underline: true });
+    // Titel
+    doc
+      .fontSize(18)
+      .text("Geräteaufnahme", {
+        underline: true
+      });
+
     doc.moveDown();
 
+    // Gerätedaten
     doc.fontSize(14).text("Gerätedaten");
-    Object.entries(meta || {}).forEach(([k, v]) => {
-      doc.fontSize(12).text(`${k}: ${v}`);
-    });
+
+    Object.entries(meta || {}).forEach(
+      ([k, v]) => {
+        doc.fontSize(12).text(`${k}: ${v}`);
+      }
+    );
 
     doc.moveDown();
 
+    // Prüfungen
     doc.fontSize(14).text("Prüfungen");
 
-sections.forEach(section => {
-  doc.moveDown();
-  doc.fontSize(12).text(section.title, {
-    underline: true
-  });
+    sections.forEach((section) => {
+      doc.moveDown();
 
-  section.items.forEach(item => {
-    let statusText = "Nicht geprüft";
+      doc.fontSize(12).text(
+        section.title,
+        {
+          underline: true
+        }
+      );
 
-    if (item.status === "ok") {
-      statusText = "OK";
-    }
+      section.items.forEach((item) => {
+        let statusText =
+          "Nicht geprüft";
 
-    if (item.status === "fehler") {
-      statusText = "Fehler";
-    }
+        if (item.status === "ok") {
+          statusText = "OK";
+        }
 
-    doc.text(
-      `${item.label} | ${statusText} | ${item.value || ""}`
-    );
-  });
-});
+        if (item.status === "fehler") {
+          statusText = "Fehler";
+        }
 
-doc.moveDown();
-
-doc.fontSize(14).text("Bemerkungen");
-doc.fontSize(12).text(remarks || "");
-
-doc.moveDown();
-
-doc.fontSize(14).text("Techniker");
-doc.fontSize(12).text(technician || "");
-
-doc.moveDown();
-
-doc.fontSize(14).text("Techniker-Unterschrift");
-
-if (signatures?.techniker) {
-  try {
-    const base64Data = signatures.techniker.replace(
-      /^data:image\/png;base64,/,
-      ""
-    );
-
-    const imageBuffer = Buffer.from(
-      base64Data,
-      "base64"
-    );
-
-    doc.image(imageBuffer, {
-      fit: [250, 120]
+        doc.text(
+          `${item.label} | ${statusText} | ${
+            item.value || ""
+          }`
+        );
+      });
     });
-  } catch (err) {
-    console.log(
-      "Unterschrift konnte nicht eingefügt werden"
-    );
-    console.error(err);
-  }
-}
-    // ✅ Bilder
-    if (req.files?.length) {
-      doc.addPage().fontSize(14).text("Bilder");
 
-      req.files.forEach(file => {
+    // Bemerkungen
+    doc.moveDown();
+
+    doc.fontSize(14).text(
+      "Bemerkungen"
+    );
+
+    doc.fontSize(12).text(
+      remarks || ""
+    );
+
+    // Techniker
+    doc.moveDown();
+
+    doc.fontSize(14).text(
+      "Techniker"
+    );
+
+    doc.fontSize(12).text(
+      technician || ""
+    );
+
+    // Unterschrift
+    doc.moveDown();
+
+    doc.fontSize(14).text(
+      "Techniker-Unterschrift"
+    );
+
+    if (signatures?.techniker) {
+      try {
+        const base64Data =
+          signatures.techniker.replace(
+            /^data:image\/png;base64,/,
+            ""
+          );
+
+        const imageBuffer =
+          Buffer.from(
+            base64Data,
+            "base64"
+          );
+
+        doc.image(imageBuffer, {
+          fit: [250, 120]
+        });
+      } catch (err) {
+        console.error(
+          "Unterschrift konnte nicht eingefügt werden",
+          err
+        );
+      }
+    }
+
+    // Bilder
+    if (req.files?.length) {
+      doc.addPage();
+
+      doc.fontSize(14).text("Bilder");
+
+      req.files.forEach((file) => {
         try {
           doc.addPage();
-          doc.image(file.path, { fit: [400, 300], align: "center" });
-          doc.moveDown().text(file.filename);
+
+          doc.image(file.path, {
+            fit: [400, 300],
+            align: "center"
+          });
+
+          doc.moveDown();
+
+          doc.text(file.filename);
         } catch (err) {
-          console.log("⚠️ Bild konnte nicht geladen werden:", file.filename);
+          console.log(
+            "⚠️ Bild konnte nicht geladen werden:",
+            file.filename
+          );
         }
       });
     }
 
     doc.end();
 
-    // ✅ WARTEN BIS PDF FERTIG IST (KORREKT)
-    await new Promise((resolve, reject) => {
-      stream.on("finish", resolve);
-      stream.on("error", reject);
-    });
+    await new Promise(
+      (resolve, reject) => {
+        stream.on(
+          "finish",
+          resolve
+        );
 
-    console.log("✅ PDF fertig erstellt");
+        stream.on(
+          "error",
+          reject
+        );
+      }
+    );
 
-    // ✅ MAIL TRANSPORTER
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+    console.log(
+      "✅ PDF fertig erstellt"
+    );
+
+    const transporter =
+      nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: Number(
+          process.env.SMTP_PORT
+        ),
+        secure: false,
+        auth: {
+          user:
+            process.env.SMTP_USER,
+          pass:
+            process.env.SMTP_PASS
+        }
+      });
 
     console.log("📧 Sende Mail...");
 
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from:
+        process.env.SMTP_USER,
       to: process.env.MAIL_TO,
-      subject: "Geräteaufnahme (PDF)",
-      text: "Die Checkliste befindet sich im Anhang.",
+      subject:
+        "Geräteaufnahme (PDF)",
+      text:
+        "Die Checkliste befindet sich im Anhang.",
       attachments: [
         {
-          filename: path.basename(pdfPath),
+          filename:
+            path.basename(
+              pdfPath
+            ),
           path: pdfPath
         }
       ]
     });
 
-    console.log("✅ Mail gesendet");
+    console.log(
+      "✅ Mail gesendet"
+    );
 
-    res.json({ success: true });
-
+    res.json({
+      success: true
+    });
   } catch (err) {
-    console.error("🔥 FEHLER:", err);
-    res.status(500).json({ error: "Mailversand fehlgeschlagen" });
+    console.error(
+      "🔥 FEHLER:",
+      err
+    );
+
+    res.status(500).json({
+      error:
+        "Mailversand fehlgeschlagen"
+    });
   }
 });
 
-const PORT = process.env.PORT || 3001;
+// React SPA Fallback
+app.use((req, res) => {
+  res.sendFile(
+    path.join(
+      __dirname,
+      "../dist/index.html"
+    )
+  );
+});
+
+const PORT =
+  process.env.PORT || 3001;
 
 app.listen(PORT, () => {
-  console.log(`✅ Mailserver läuft auf Port ${PORT}`);
+  console.log(
+    `✅ Mailserver läuft auf Port ${PORT}`
+  );
 });
