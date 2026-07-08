@@ -1,16 +1,36 @@
+
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CHECKLIST_CATEGORIES } from "../config/checklists.js";
 import SignatureCanvas from "react-signature-canvas";
-import { useRef } from "react";
 
 export default function ChecklistPage() {
-  const { categoryId } = useParams();
-  const category = CHECKLIST_CATEGORIES[categoryId];
+  const { category } = useParams();
+
+  const [data, setData] = useState({});
+
+useEffect(() => {
+  console.log("Keep-Alive gestartet");
+
+  const interval = setInterval(() => {
+    console.log("Sende Keep-Alive");
+
+    fetch("/api/health")
+      .then(() => console.log("Keep-Alive erfolgreich"))
+      .catch(console.error);
+  }, 30000);
+
+  return () => clearInterval(interval);
+}, []);
 
   if (!category) return <div>Kategorie nicht gefunden.</div>;
 
   const schema = category.schema;
+
+  const [meta, setMeta] = useState(
+    Object.fromEntries(schema.meta.fields.map(f => [f.id, ""]))
+  );
+
   
   // ✅ META
   const [meta, setMeta] = useState(
