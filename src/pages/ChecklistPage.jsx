@@ -357,9 +357,10 @@ if (missingImages.length > 0) {
   </span>
 </span>
           <input
-            type="file"
-            onChange={e => handleImageUpload(key, e.target.files[0])}
-          />
+  key={`${key}-${Object.keys(images).length}`}
+  type="file"
+  onChange={e => handleImageUpload(key, e.target.files[0])}
+/>
           <span>{images[key]?.name || "Keine Datei gewählt"}</span>
         </label>
       ))}
