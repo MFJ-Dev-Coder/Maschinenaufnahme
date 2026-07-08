@@ -38,6 +38,18 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use(cors());
 
+app.use(
+  express.static(
+    path.join(__dirname, "../dist")
+  )
+);
+
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../dist/index.html")
+  );
+});
+
 app.get("/", (req, res) => {
   res.send("Mailserver läuft");
 });
@@ -208,6 +220,8 @@ if (signatures?.techniker) {
   }
 });
 
-app.listen(3001, () => {
-  console.log("✅ Mailserver läuft auf Port 3001, 1A");
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
+  console.log(`✅ Mailserver läuft auf Port ${PORT}`);
 });
