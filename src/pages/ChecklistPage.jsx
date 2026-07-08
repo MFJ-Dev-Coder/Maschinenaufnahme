@@ -499,9 +499,9 @@ if (
     <div className="page">
 
       <header className="header">
-        <h1>{selectedCategory.title}</h1>
-        <p>{category.description}</p>
-      </header>
+  <h1>{selectedCategory.title}</h1>
+  <p>{selectedCategory.description}</p>
+</header>
 
       <Link to="/" className="button button--secondary">
         ← Zurück zum Menü
