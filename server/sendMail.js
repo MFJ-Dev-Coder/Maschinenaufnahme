@@ -1,18 +1,15 @@
 import express from "express";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import cors from "cors";
 import dotenv from "dotenv";
 import multer from "multer";
 import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
-import dns from "dns";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 dotenv.config();
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app = express();
 
@@ -45,15 +42,9 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use(cors());
 
-app.use(
-  express.static(
-    path.join(__dirname, "../dist")
-  )
-);
-
 app.post("/sendMail", upload.any(), async (req, res) => {
   try {
-    console.log("✅ SERVER LÄUFT (PDF MODE)");
+    console.log("✅ SERVER LÄUFT (RESEND MODE)");
 
     const data = JSON.parse(req.body.data);
 
@@ -122,8 +113,7 @@ app.post("/sendMail", upload.any(), async (req, res) => {
       );
 
       section.items.forEach((item) => {
-        let statusText =
-          "Nicht geprüft";
+        let statusText = "Nicht geprüft";
 
         if (item.status === "ok") {
           statusText = "OK";
@@ -143,29 +133,16 @@ app.post("/sendMail", upload.any(), async (req, res) => {
 
     // Bemerkungen
     doc.moveDown();
-
-    doc.fontSize(14).text(
-      "Bemerkungen"
-    );
-
-    doc.fontSize(12).text(
-      remarks || ""
-    );
+    doc.fontSize(14).text("Bemerkungen");
+    doc.fontSize(12).text(remarks || "");
 
     // Techniker
     doc.moveDown();
-
-    doc.fontSize(14).text(
-      "Techniker"
-    );
-
-    doc.fontSize(12).text(
-      technician || ""
-    );
+    doc.fontSize(14).text("Techniker");
+    doc.fontSize(12).text(technician || "");
 
     // Unterschrift
     doc.moveDown();
-
     doc.fontSize(14).text(
       "Techniker-Unterschrift"
     );
@@ -178,11 +155,10 @@ app.post("/sendMail", upload.any(), async (req, res) => {
             ""
           );
 
-        const imageBuffer =
-          Buffer.from(
-            base64Data,
-            "base64"
-          );
+        const imageBuffer = Buffer.from(
+          base64Data,
+          "base64"
+        );
 
         doc.image(imageBuffer, {
           fit: [250, 120]
@@ -198,7 +174,6 @@ app.post("/sendMail", upload.any(), async (req, res) => {
     // Bilder
     if (req.files?.length) {
       doc.addPage();
-
       doc.fontSize(14).text("Bilder");
 
       req.files.forEach((file) => {
@@ -211,7 +186,6 @@ app.post("/sendMail", upload.any(), async (req, res) => {
           });
 
           doc.moveDown();
-
           doc.text(file.filename);
         } catch (err) {
           console.log(
@@ -222,87 +196,60 @@ app.post("/sendMail", upload.any(), async (req, res) => {
       });
     }
 
+    doc.end();
 
-doc.end();
+    await new Promise((resolve, reject) => {
+      stream.on("finish", resolve);
+      stream.on("error", reject);
+    });
 
-await new Promise((resolve, reject) => {
-  stream.on("finish", resolve);
-  stream.on("error", reject);
-});
+    console.log("✅ PDF fertig erstellt");
 
-console.log("✅ PDF fertig erstellt");
+    const pdfBuffer =
+      fs.readFileSync(pdfPath);
 
-dns.setDefaultResultOrder("ipv4first");
+    console.log(
+      "📧 Sende Mail über Resend..."
+    );
 
-const transporter = nodemailer.createTransport({
-  host: "outlook.office365.com",
-  port: 587,
-  secure: false,
-  requireTLS: true,
+    const result =
+      await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: process.env.MAIL_TO,
 
-  family: 4,
+        subject: `Geräteaufnahme ${internnummer}`,
 
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
+        text: "Die Checkliste befindet sich im Anhang.",
 
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
-});
+        attachments: [
+          {
+            filename:
+              path.basename(pdfPath),
+            content:
+              pdfBuffer.toString(
+                "base64"
+              )
+          }
+        ]
+      });
 
-console.log("📧 Starte Mailversand...");
-
-await transporter.sendMail({
-  from: process.env.SMTP_USER,
-  to: process.env.MAIL_TO,
-
-  subject: `Geräteaufnahme ${internnummer}`,
-
-  text: "Die Checkliste befindet sich im Anhang.",
-
-  attachments: [
-    {
-      filename: path.basename(pdfPath),
-      path: pdfPath
-    }
-  ]
-});
-
-console.log("✅ Mail gesendet");
-
-res.json({
-  success: true
-});
+    console.log("✅ Mail gesendet");
+    console.log(result);
 
     res.json({
       success: true
     });
+
   } catch (err) {
-  console.error("🔥 FEHLER:");
-  console.error(err);
-  console.error(err?.response);
-  console.error(err?.responseCode);
+    console.error("🔥 FEHLER:", err);
 
-  res.status(500).json({
-    error: "Mailversand fehlgeschlagen"
-  });
-}
+    res.status(500).json({
+      error: "Mailversand fehlgeschlagen"
+    });
+  }
 });
 
-// React SPA Fallback
-app.use((req, res) => {
-  res.sendFile(
-    path.join(
-      __dirname,
-      "../dist/index.html"
-    )
-  );
-});
-
-const PORT =
-  process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log(
