@@ -7,9 +7,9 @@ export const CHECKLIST_CATEGORIES = {
     schema: {
       meta: {
         fields: [
-          { id: "Kunde", label: "Kunde" },
-          { id: "Arbeitsauftrag", label: "Arbeitsauftrag"},
-          { id: "Hersteller",
+          { id: "kunde", label: "Kunde" },
+          { id: "arbeitsauftrag", label: "Arbeitsauftrag"},
+          { id: "hersteller",
             label: "Hersteller",
             type: "select",
             options: [
@@ -23,7 +23,7 @@ export const CHECKLIST_CATEGORIES = {
           },
           
           {
-            id: "Typ",
+            id: "typ",
             label: "Typ",
             type: "select",
             dependsOn: "hersteller",
@@ -276,7 +276,7 @@ verbrenner: {
 meta: {
   fields: [
     { id: "kunde", label: "Kunde" },
-    { id: "Arbeitsauftrag", label: "Arbeitsauftrag"},
+    { id: "arbeitsauftrag", label: "Arbeitsauftrag"},
     {
       id: "hersteller",
       label: "Hersteller",
@@ -557,7 +557,7 @@ meta: {
       meta: {
     fields: [
       { id: "kunde", label: "Kunde" },
-      { id: "Arbeitsauftrag", label: "Arbeitsauftrag"},
+      { id: "arbeitsauftrag", label: "Arbeitsauftrag"},
       {
         id: "hersteller",
   label: "Hersteller",
