@@ -5,11 +5,10 @@ import { CHECKLIST_CATEGORIES } from "../config/checklists.js";
 import SignatureCanvas from "react-signature-canvas";
 
 export default function ChecklistPage() {
-  const { category } = useParams();
-  const categoryId = category;
+  const { categoryId } = useParams();
 
-  const selectedCategory = CHECKLIST_CATEGORIES[category];
-
+const selectedCategory =
+  CHECKLIST_CATEGORIES[categoryId];
   useEffect(() => {
     const interval = setInterval(() => {
       if (!document.hidden) {
