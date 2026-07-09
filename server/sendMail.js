@@ -29,8 +29,6 @@ const storage = multer.diskStorage({
       const internnummer =
         data?.meta?.internnummer || "unknown";
 
-      const ext = path.extname(file.originalname);
-
       cb(
   null,
   `${file.fieldname}_${internnummer}`
@@ -48,9 +46,8 @@ app.use(cors());
 
 app.get("/api/health", (req, res) => {
   console.log(
-    "KEEP ALIVE PING",
-    new Date().toISOString()
-  );
+  `❤️ KEEP ALIVE PING ${new Date().toISOString()}`
+);
 
   res.status(200).send("OK");
 });
