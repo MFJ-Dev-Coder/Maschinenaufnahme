@@ -221,14 +221,15 @@ export const CHECKLIST_CATEGORIES = {
             { label: "Stückzahl", required: true }
           ]
         },
+          {
+  title: "Sichtprüfung - Hydraulik",
+  items: [
+    { label: "Hydraulikschläuche", required: true }
+  ]
+},
 
-        {
-          title: "Sichtprüfung - Hydraulik",
-          items: [
-            { label: "Hydraulikschläuche", required: true },
-              ]
-        {
-          title: "Sichtprüfung - Mast",
+{
+  title: "Sichtprüfung - Mast",
           items: [
             { label: "Mastart", required: true },
             { label: "Mastnummer", required: true },
