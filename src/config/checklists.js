@@ -226,7 +226,7 @@ export const CHECKLIST_CATEGORIES = {
           title: "Sichtprüfung - Hydraulik",
           items: [
             { label: "Hydraulikschläuche", required: true },
-
+              ]
         {
           title: "Sichtprüfung - Mast",
           items: [
@@ -269,7 +269,7 @@ export const CHECKLIST_CATEGORIES = {
             { label: "Hub ohne Last", required: true },
             { label: "Funktionstest", required: true },
             { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true },
-            { label: "Gerät abgeschmiert", , required: true }
+            { label: "Gerät abgeschmiert", required: true }
           ]
         }
       ]
@@ -552,7 +552,7 @@ meta: {
             { label: "Hub ohne Last", required: true },
             { label: "Funktionstest", required: true },
             { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true },
-            { label: "Gerät abgeschmiert", , required: true }
+            { label: "Gerät abgeschmiert", required: true }
           ]
         }
       ]
@@ -796,7 +796,7 @@ meta: {
             { label: "Hub ohne Last", required: true },
             { label: "Funktionstest", required: true },
             { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true },
-            { label: "Gerät abgeschmiert", , required: true }
+            { label: "Gerät abgeschmiert", required: true }
           ]
         }
       ]
