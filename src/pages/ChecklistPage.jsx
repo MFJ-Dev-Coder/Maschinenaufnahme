@@ -266,7 +266,7 @@ if (
       const text =
         await response.text();
 
-      alert("Fehler: " + text);
+      alert("Nicht vorhanden: " + text);
       return;
     }
 
@@ -395,9 +395,9 @@ if (
                 >OK</button>
 
                 <button
-                  className={item.status === "fehler" ? "active" : ""}
-                  onClick={() => updateSectionStatus(sIndex, iIndex, "fehler")}
-                >Fehler</button>
+                  className={item.status === "Nicht vorhanden" ? "active" : ""}
+                  onClick={() => updateSectionStatus(sIndex, iIndex, "Nicht vorhanden")}
+                >Nicht vorhanden</button>
               
 {item.measurements ? (
   item.measurements.map(measurement => (
