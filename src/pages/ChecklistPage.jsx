@@ -91,8 +91,9 @@ const selectedCategory =
             if (iIdx !== itemIndex) return item;
   
             return {
-              ...item,
-              value
+                    ...item,
+                    value: "",
+                    values: {}
             };
           })
         };
