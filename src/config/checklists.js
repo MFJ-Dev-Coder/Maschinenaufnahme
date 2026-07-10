@@ -199,7 +199,7 @@ export const CHECKLIST_CATEGORIES = {
             { label: "Batteriezustand", required: true },
             { label: "Ladestecker", required: true },
             { label: "Ladegerät", required: true },
-            { label: "Batterieleistung(Volt,Ah)", required: true}
+            { label: "Batterieleistung", measurements: ["Volt", "Ah"], required: true }
           ]
         },
         
@@ -727,7 +727,7 @@ meta: {
             { label: "Batteriezustand", required: true },
             { label: "Ladestecker", required: true },
             { label: "Ladegerät", required: true },
-            { label: "Batterieleistung(Volt,Ah)", required: true}
+            { label: "Batterieleistung", measurements: ["Volt", "Ah"], required: true }
           ]
         },
 
