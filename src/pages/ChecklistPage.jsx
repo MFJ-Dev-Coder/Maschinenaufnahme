@@ -38,11 +38,13 @@ const selectedCategory =
     schema.sections.map(section => ({
       title: section.title,
       items: section.items.map(item => ({
-        label: typeof item === "string" ? item : item.label,
-        required: item.required || false,
-        status: null,
-        value: ""
-      }))
+  label: typeof item === "string" ? item : item.label,
+  required: item.required || false,
+  measurements: item.measurements || null,
+  status: null,
+  value: "",
+  values: {}
+}))
     }))
   );
 
@@ -101,6 +103,30 @@ const updateMeasurementValue = (
               ...(item.values || {}),
               value
             }
+          };
+        })
+      };
+    })
+  );
+};
+
+  const updateSectionValue = (
+  sectionIndex,
+  itemIndex,
+  value
+) => {
+  setSections(prev =>
+    prev.map((section, sIdx) => {
+      if (sIdx !== sectionIndex) return section;
+
+      return {
+        ...section,
+        items: section.items.map((item, iIdx) => {
+          if (iIdx !== itemIndex) return item;
+
+          return {
+            ...item,
+            value
           };
         })
       };
@@ -261,15 +287,13 @@ if (
       schema.sections.map(section => ({
         title: section.title,
         items: section.items.map(item => ({
-          label:
-            typeof item === "string"
-              ? item
-              : item.label,
-          required:
-            item.required || false,
-          status: null,
-          value: ""
-        }))
+  label: typeof item === "string" ? item : item.label,
+  required: item.required || false,
+  measurements: item.measurements || null,
+  status: null,
+  value: "",
+  values: {}
+}))
       }))
     );
 
@@ -407,16 +431,7 @@ if (
       )
     }
   />
-)}dateSectionValue(sIndex, iIndex, e.target.value)
-  }
-  style={{
-    marginLeft: "10px",
-    minWidth: "200px"
-  }}
-/>
-
-
-
+)}
                 
               </div>
             </div>
