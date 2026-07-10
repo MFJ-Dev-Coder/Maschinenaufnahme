@@ -184,47 +184,56 @@ export const CHECKLIST_CATEGORIES = {
         {
           title: "Sichtprüfung - Rahmen",
           items: [
-            { label: "Fahrersitz" },
-            { label: "Kabine & Scheibe" },
-            { label: "Durchgreifschutz" },
+            { label: "Fahrersitz", required: true },
+            { label: "Kabine & Scheibe", required: true },
+            { label: "Durchgreifschutz", required: true },
             { label: "Aufkleber (Pieckert, aktuelle UVV, ...)", required: true },
             { label: "Typenschild", required: true }
           ]
         },
 
+                {
+          title: "Sichtprüfung - Batterie",
+          items: [
+            { label: "Batteriemaße", required: true },
+            { label: "Batteriezustand", required: true },
+            { label: "Ladestecker", required: true },
+            { label: "Ladegerät", required: true },
+            { label: "Batterieleistung(Volt,Ah)", required: true}
+          ]
+        },
+        
         {
           title: "Sichtprüfung - Hydraulikpumpe",
           items: [
-            { label: "Ölstand" },
+            { label: "Ölstand", required: true },
             { label: "Motortypenschild", required: true },
-            { label: "Motorseriennummer" }
+            { label: "Motorseriennummer", required: true }
           ]
         },
 
         {
           title: "Sichtprüfung - Bereifung",
           items: [
-            { label: "Reifen" },
-            { label: "Reifenart" },
-            { label: "Reifengröße" },
-            { label: "Stückzahl" }
+            { label: "Reifen", required: true },
+            { label: "Reifenart", required: true },
+            { label: "Reifengröße", required: true },
+            { label: "Stückzahl", required: true }
           ]
         },
 
         {
           title: "Sichtprüfung - Hydraulik",
           items: [
-            { label: "Hydraulikschläuche" }
-          ]
-        },
+            { label: "Hydraulikschläuche", required: true },
 
         {
           title: "Sichtprüfung - Mast",
           items: [
-            { label: "Mastart" },
+            { label: "Mastart", required: true },
             { label: "Mastnummer", required: true },
-            { label: "Gabelzinken" },
-            {label: "Hubzylinder"}
+            { label: "Gabelzinken", required: true },
+            {label: "Hubzylinder", required: true}
           ]
         },
 
@@ -239,27 +248,28 @@ export const CHECKLIST_CATEGORIES = {
           title: "Funktionstest - Bremse",
           items: [
             { label: "Betriebsbremse", required: true },
-            { label: "Feststellbremse" }
+            { label: "Feststellbremse", required: true }
           ]
         },
 
         {
           title: "Funktionstest - Elektrik",
           items: [
-            { label: "Zündschloss" },
-            { label: "Hupe" },
-            { label: "Beleuchtungsanlage"}
+            { label: "Zündschloss", required: true },
+            { label: "Hupe", required: true },
+            { label: "Beleuchtungsanlage", required: true}
           ]
         },
 
         {
           title: "Funktionstest - Probefahrt",
           items: [
-            { label: "Bremsen bei leichter Steigung" },
-            { label: "Lenkung während Probefahrt" },
-            { label: "Hub ohne Last" },
+            { label: "Bremsen bei leichter Steigung", required: true },
+            { label: "Lenkung während Probefahrt", required: true },
+            { label: "Hub ohne Last", required: true },
             { label: "Funktionstest", required: true },
-            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true }
+            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true },
+            { label: "Gerät abgeschmiert", , required: true }
           ]
         }
       ]
@@ -452,10 +462,10 @@ meta: {
         {
           title: "Sichtprüfung - Motor",
           items: [
-            { label: "Motorhaube" },
-            { label: "Ölstand" },
+            { label: "Motorhaube", required: true },
+            { label: "Ölstand", required: true },
             { label: "Motortypenschild", required: true },
-            { label: "Motorkennzeichen" },
+            { label: "Motorkennzeichen", required: true },
             { label: "Motorseriennummer", required: true }
           ]
         },
@@ -463,8 +473,8 @@ meta: {
         {
           title: "Sichtprüfung - Rahmen",
           items: [
-            { label: "Fahrersitz" },
-            { label: "Kabine & Scheiben" },
+            { label: "Fahrersitz", required: true },
+            { label: "Kabine & Scheiben", required: true },
             { label: "Aufkleber (Pieckert, aktuelle UVV, ...)", required: true },
             { label: "Typenschild", required: true }
           ]
@@ -473,27 +483,27 @@ meta: {
         {
           title: "Sichtprüfung - Bereifung",
           items: [
-            { label: "Reifen" },
-            { label: "Reifenart" },
-            { label: "Reifengröße" },
-            { label: "Stückzahl" }
+            { label: "Reifen", required: true },
+            { label: "Reifenart", required: true },
+            { label: "Reifengröße", required: true },
+            { label: "Stückzahl", required: true }
           ]
         },
 
         {
           title: "Sichtprüfung - Hydraulik",
           items: [
-            { label: "Hydraulikschläuche" },
-            { label: "Hydrauliktank" }
+            { label: "Hydraulikschläuche", required: true },
+            { label: "Hydrauliktank", required: true }
           ]
         },
 
         {
           title: "Sichtprüfung - Mast",
           items: [
-            { label: "Mastart" },
+            { label: "Mastart", required: true },
             { label: "Mastnummer", required: true },
-            { label: "Gabelzinken" }
+            { label: "Gabelzinken", required: true }
           ]
         },
 
@@ -508,25 +518,25 @@ meta: {
           title: "Funktionstest - Bremse",
           items: [
             { label: "Betriebsbremse", required: true },
-            { label: "Feststellbremse" }
+            { label: "Feststellbremse", required: true }
           ]
         },
 
         {
           title: "Funktionstest - Motorlauf",
           items: [
-            { label: "Startverhalten" },
-            { label: "Leerlauf" },
-            { label: "Max. Geschwindigkeit" }            
+            { label: "Startverhalten", required: true },
+            { label: "Leerlauf", required: true },
+            { label: "Max. Geschwindigkeit", required: true }            
           ]
         },
 
         {
           title: "Funktionstest - Elektrik",
           items: [
-            { label: "Zündschloss" },
-            { label: "Hupe" },
-            { label: "Scheibenwischer" },
+            { label: "Zündschloss", required: true },
+            { label: "Hupe", required: true },
+            { label: "Scheibenwischer", required: true },
             { label: "Display- Datum & Uhrzeit einstellen", required: true },
             { label: "Verwendeter Servicecode", required: true },
             { label: "Beleuchtungsanlage", required: true }
@@ -537,11 +547,12 @@ meta: {
         {
           title: "Funktionstest - Probefahrt",
           items: [
-            { label: "Bremsen bei leichter Steigung" },
-            { label: "Lenkung während Probefahrt" },
-            { label: "Hub ohne Last" },
+            { label: "Bremsen bei leichter Steigung", required: true },
+            { label: "Lenkung während Probefahrt", required: true },
+            { label: "Hub ohne Last", required: true },
             { label: "Funktionstest", required: true },
-            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true }
+            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true },
+            { label: "Gerät abgeschmiert", , required: true }
           ]
         }
       ]
@@ -713,40 +724,40 @@ meta: {
           title: "Sichtprüfung - Batterie",
           items: [
             { label: "Batteriemaße", required: true },
-            { label: "Batteriezustand" },
-            { label: "Ladestecker" },
-            { label: "Ladegerät" },
-            { label: "Batterieleistung(Volt,Ah)"}
+            { label: "Batteriezustand", required: true },
+            { label: "Ladestecker", required: true },
+            { label: "Ladegerät", required: true },
+            { label: "Batterieleistung(Volt,Ah)", required: true}
           ]
         },
 
         {
           title: "Sichtprüfung - Rahmen",
           items: [
-            { label: "Kabel" },
-            { label: "Steuerung" },
+            { label: "Kabel", required: true },
+            { label: "Steuerung", required: true },
             { label: "Aufkleber (Pieckert, aktuelle UVV, ...)", required: true },
             { label: "Typenschild", required: true },
-            {label: "Kabine & Scheiben"}
+            {label: "Kabine & Scheiben", required: true}
           ]
         },
 
         {
           title: "Sichtprüfung - Bereifung",
           items: [
-            { label: "Reifen" },
-            { label: "Reifenart" },
-            { label: "Reifengröße" },
-            { label: "Stückzahl" }
+            { label: "Reifen", required: true },
+            { label: "Reifenart", required: true },
+            { label: "Reifengröße", required: true },
+            { label: "Stückzahl", required: true }
           ]
         },
 
         {
           title: "Sichtprüfung - Mast",
           items: [
-            { label: "Mastart" },
+            { label: "Mastart", required: true },
             { label: "Mastnummer", required: true },
-            { label: "Gabelzinken" }
+            { label: "Gabelzinken", required: true }
           ]
         },
 
@@ -761,16 +772,16 @@ meta: {
           title: "Funktionstest - Bremse",
           items: [
             { label: "Betriebsbremse", required: true },
-            { label: "Feststellbremse" }
+            { label: "Feststellbremse", required: true }
           ]
         },
 
         {
           title: "Funktionstest - Elektrik",
           items: [
-            { label: "Zündschloss" },
-            { label: "Hupe" },
-            { label: "Scheibenwischer" },
+            { label: "Zündschloss", required: true },
+            { label: "Hupe", required: true },
+            { label: "Scheibenwischer", required: true },
             { label: "Display- Datum & Uhrzeit einstellen", required: true },
             { label: "Verwendeter Servicecode", required: true },
             { label: "Beleuchtungsanlage", required: true }
@@ -780,11 +791,12 @@ meta: {
         {
           title: "Funktionstest - Probefahrt",
           items: [
-            { label: "Bremsen bei leichter Steigung" },
-            { label: "Lenkung während Probefahrt" },
-            { label: "Hub ohne Last" },
+            { label: "Bremsen bei leichter Steigung", required: true },
+            { label: "Lenkung während Probefahrt", required: true },
+            { label: "Hub ohne Last", required: true },
             { label: "Funktionstest", required: true },
-            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true }
+            { label: "Alle Verschraubungen geprüft (Fester Sitz/Leckage)", required: true },
+            { label: "Gerät abgeschmiert", , required: true }
           ]
         }
       ]
