@@ -80,26 +80,33 @@ const selectedCategory =
       })
     );
   };
-  const updateSectionValue = (sectionIndex, itemIndex, value) => {
-    setSections(prev =>
-      prev.map((section, sIdx) => {
-        if (sIdx !== sectionIndex) return section;
-  
-        return {
-          ...section,
-          items: section.items.map((item, iIdx) => {
-            if (iIdx !== itemIndex) return item;
-  
-            return {
-                    ...item,
-                    value: "",
-                    values: {}
-            };
-          })
-        };
-      })
-    );
-  };
+const updateMeasurementValue = (
+  sectionIndex,
+  itemIndex,
+  measurement,
+  value
+) => {
+  setSections(prev =>
+    prev.map((section, sIdx) => {
+      if (sIdx !== sectionIndex) return section;
+
+      return {
+        ...section,
+        items: section.items.map((item, iIdx) => {
+          if (iIdx !== itemIndex) return item;
+
+          return {
+            ...item,
+            values: {
+              ...(item.values || {}),
+              value
+            }
+          };
+        })
+      };
+    })
+  );
+};
 
   const updateDecision = (id, value) => {
     setDecisions(prev => ({ ...prev, [id]: value }));
