@@ -135,8 +135,8 @@ app.post("/sendMail", upload.any(), async (req, res) => {
           statusText = "OK";
         }
 
-        if (item.status === "fehler") {
-          statusText = "Fehler";
+        if (item.status === "Nicht vorhanden") {
+          statusText = "Nicht vorhanden";
         }
 
         doc.text(
