@@ -375,12 +375,39 @@ if (
                   onClick={() => updateSectionStatus(sIndex, iIndex, "fehler")}
                 >Fehler</button>
               
-<input
-  type="text"
-  placeholder="Bemerkung / Messwert"
-  value={item.value || ""}
-  onChange={e =>
-    updateSectionValue(sIndex, iIndex, e.target.value)
+{item.measurements ? (
+  item.measurements.map(measurement => (
+    <input
+      key={measurement}
+      type="text"
+      placeholder={measurement}
+      value={
+        item.values?.[measurement] || ""
+      }
+      onChange={e =>
+        updateMeasurementValue(
+          sIndex,
+          iIndex,
+          measurement,
+          e.target.value
+        )
+      }
+    />
+  ))
+) : (
+  <input
+    type="text"
+    placeholder="Bemerkung / Messwert"
+    value={item.value || ""}
+    onChange={e =>
+      updateSectionValue(
+        sIndex,
+        iIndex,
+        e.target.value
+      )
+    }
+  />
+)}dateSectionValue(sIndex, iIndex, e.target.value)
   }
   style={{
     marginLeft: "10px",
