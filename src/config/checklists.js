@@ -195,11 +195,13 @@ export const CHECKLIST_CATEGORIES = {
                 {
           title: "Sichtprüfung - Batterie",
           items: [
-            { label: "Batteriemaße", required: true },
+            { label: "Batteriemaße", measurements: ["Länge", "Breite", "Höhe"], required: true },
             { label: "Batteriezustand", required: true },
-            { label: "Ladestecker", required: true },
-            { label: "Ladegerät", required: true },
-            { label: "Batterieleistung", measurements: ["Volt", "Ah"], required: true }
+            { label: "Ladestecker", measurements: ["Typ, Größe"], required: true },
+            { label: "Ladegerät", measurements: ["Leistung", "Seriennummer"], required: true },
+            { label: "Batterieleistung", measurements: ["Volt", "Ah"], required: true },
+            { label: "Aquamatic", required: true },
+            { label: "EUW", required: true }
           ]
         },
         
@@ -217,8 +219,8 @@ export const CHECKLIST_CATEGORIES = {
           items: [
             { label: "Reifen", required: true },
             { label: "Reifenart", required: true },
-            { label: "Reifengröße", required: true },
-            { label: "Stückzahl", required: true }
+            { label: "Reifengröße", measurements: ["VA", "HA"], required: true },
+            { label: "Reifenanzahl", measurements: ["Antriebsrad", "Stützrad", "Lastrolle"], required: true }
           ]
         },
           {
@@ -234,7 +236,8 @@ export const CHECKLIST_CATEGORIES = {
             { label: "Mastart", required: true },
             { label: "Mastnummer", required: true },
             { label: "Gabelzinken", required: true },
-            {label: "Hubzylinder", required: true}
+            {label: "Hubzylinder", required: true},
+            { label: "Anbaugerät", measurements: ["Hersteller", "Typ", "Seriennummer"], requiresImage: true, required: true}
           ]
         },
 
@@ -486,8 +489,8 @@ meta: {
           items: [
             { label: "Reifen", required: true },
             { label: "Reifenart", required: true },
-            { label: "Reifengröße", required: true },
-            { label: "Stückzahl", required: true }
+            { label: "Reifengröße", measurements: ["VA", "HA"], required: true },
+            { label: "Reifenanzahl", measurements: ["VA", "HA"], required: true }
           ]
         },
 
@@ -504,7 +507,9 @@ meta: {
           items: [
             { label: "Mastart", required: true },
             { label: "Mastnummer", required: true },
-            { label: "Gabelzinken", required: true }
+            { label: "Gabelzinken", required: true },
+            { label: "Hubzylinder", required: true},
+            { label: "Anbaugerät", measurements: ["Hersteller", "Typ", "Seriennummer"], requiresImage: true, required: true}
           ]
         },
 
@@ -724,11 +729,13 @@ meta: {
         {
           title: "Sichtprüfung - Batterie",
           items: [
-            { label: "Batteriemaße", required: true },
+            { label: "Batteriemaße", measurements: ["Länge", "Breite", "Höhe"], required: true },
             { label: "Batteriezustand", required: true },
-            { label: "Ladestecker", required: true },
-            { label: "Ladegerät", required: true },
-            { label: "Batterieleistung", measurements: ["Volt", "Ah"], required: true }
+            { label: "Ladestecker", measurements: ["Typ, Größe"], required: true },
+            { label: "Ladegerät", measurements: ["Leistung", "Seriennummer"], required: true },
+            { label: "Batterieleistung", measurements: ["Volt", "Ah"], required: true },
+            { label: "Aquamatic", required: true },
+            { label: "EUW", required: true }
           ]
         },
 
@@ -748,8 +755,8 @@ meta: {
           items: [
             { label: "Reifen", required: true },
             { label: "Reifenart", required: true },
-            { label: "Reifengröße", required: true },
-            { label: "Stückzahl", required: true }
+            { label: "Reifengröße", measurements: ["VA", "HA"], required: true }
+            { label: "Reifenanzahl", measurements: ["VA", "HA"], required: true }
           ]
         },
 
@@ -758,7 +765,9 @@ meta: {
           items: [
             { label: "Mastart", required: true },
             { label: "Mastnummer", required: true },
-            { label: "Gabelzinken", required: true }
+            { label: "Gabelzinken", required: true },
+            { label: "Hubzylinder", required: true},
+            { label: "Anbaugerät", measurements: ["Hersteller", "Typ", "Seriennummer"], requiresImage: true, required: true}
           ]
         },
 
