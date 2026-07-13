@@ -25,6 +25,7 @@ const selectedCategory =
 
   const schema = selectedCategory.schema;
 
+  
   // ✅ META
   const [meta, setMeta] = useState(
     Object.fromEntries(
@@ -40,6 +41,7 @@ const selectedCategory =
       items: section.items.map(item => ({
   label: typeof item === "string" ? item : item.label,
   required: item.required || false,
+  requiresImage: item.requiresImage || false,
   measurements: item.measurements || null,
   status: null,
   value: "",
@@ -195,6 +197,19 @@ const updateMeasurementValue = (
       return;
     }
 
+const dynamicImageFields = [];
+
+sections.forEach(section => {
+  section.items.forEach(item => {
+    if (
+      item.requiresImage &&
+      item.status === "ok"
+    ) {
+      dynamicImageFields.push(item.label);
+    }
+  });
+});
+    
     const requiredImages = [
   "Typenschild",
   "Mastnummer",
@@ -203,7 +218,12 @@ const updateMeasurementValue = (
   "Reifen vorne",
   "Reifen hinten"
 ];
+    
+dynamicImageFields.forEach(field => {
+  requiredImages.push(field);
+});
 
+    
 if (
   categoryId === "lagertechnik" ||
   categoryId === "elektro"
@@ -289,6 +309,7 @@ if (
         items: section.items.map(item => ({
   label: typeof item === "string" ? item : item.label,
   required: item.required || false,
+  requiresImage: item.requiresImage || false,
   measurements: item.measurements || null,
   status: null,
   value: "",
@@ -450,6 +471,18 @@ if (
   "Reifen hinten"
 ];
 
+sections.forEach(section => {
+  section.items.forEach(item => {
+    if (
+      item.requiresImage &&
+      item.status === "ok"
+    ) {
+      imageFields.push(item.label);
+    }
+  });
+});
+`
+  
 if (
   categoryId === "lagertechnik" ||
   categoryId === "elektro"
