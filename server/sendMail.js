@@ -119,38 +119,43 @@ app.post("/sendMail", upload.any(), async (req, res) => {
     doc.fontSize(14).text("Prüfungen");
 
     sections.forEach((section) => {
-      doc.moveDown();
+  doc.moveDown();
 
-      doc.fontSize(12).text(
-        section.title,
-        {
-          underline: true
-        }
-      );
-
-     section.items.forEach((item) => {
-  let statusText = "Nicht geprüft";
-
-  if (item.status === "ok") {
-    statusText = "OK";
-  }
-
-  if (item.status === "Nicht vorhanden") {
-    statusText = "Nicht vorhanden";
-  }
-
-  let valueText = item.value || "";
-
-  if (item.values) {
-    valueText = Object.entries(item.values)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join(" | ");
-  }
-
-  doc.text(
-    `${item.label} | ${statusText} | ${valueText}`
+  doc.fontSize(12).text(
+    section.title,
+    {
+      underline: true
+    }
   );
-});
+
+  section.items.forEach((item) => {
+    let statusText = "Nicht geprüft";
+
+    if (item.status === "ok") {
+      statusText = "OK";
+    }
+
+    if (item.status === "Nicht vorhanden") {
+      statusText = "Nicht vorhanden";
+    }
+
+    let valueText = item.value || "";
+
+    if (item.values) {
+      valueText = Object.entries(item.values)
+        .map(([k, v]) => `${k}: ${v}`)
+        .join(" | ");
+    }
+
+    doc.text(
+      `${item.label} | ${statusText} | ${valueText}`
+    );
+  });
+
+}); 
+
+// Bemerkungen
+doc.moveDown();
 
     // Bemerkungen
     doc.moveDown();
