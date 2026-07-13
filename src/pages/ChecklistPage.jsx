@@ -32,7 +32,6 @@ const selectedCategory =
       schema.meta.fields.map(f => [f.id, ""])
     )
   );
-``
 
   // ✅ SECTIONS (Design + Status Buttons behalten!)
   const [sections, setSections] = useState(
@@ -286,7 +285,7 @@ if (
       const text =
         await response.text();
 
-      alert("Nicht vorhanden: " + text);
+      alert("Fehler: " + text);
       return;
     }
 
@@ -481,7 +480,6 @@ sections.forEach(section => {
     }
   });
 });
-`
   
 if (
   categoryId === "lagertechnik" ||
@@ -505,7 +503,6 @@ if (
       marginLeft: "4px"
     }}
   >
-    *
   </span>
 </span>
           <input
