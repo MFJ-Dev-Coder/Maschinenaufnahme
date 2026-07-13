@@ -128,24 +128,29 @@ app.post("/sendMail", upload.any(), async (req, res) => {
         }
       );
 
-      section.items.forEach((item) => {
-        let statusText = "Nicht geprüft";
+     section.items.forEach((item) => {
+  let statusText = "Nicht geprüft";
 
-        if (item.status === "ok") {
-          statusText = "OK";
-        }
+  if (item.status === "ok") {
+    statusText = "OK";
+  }
 
-        if (item.status === "Nicht vorhanden") {
-          statusText = "Nicht vorhanden";
-        }
+  if (item.status === "Nicht vorhanden") {
+    statusText = "Nicht vorhanden";
+  }
 
-        doc.text(
-          `${item.label} | ${statusText} | ${
-            item.value || ""
-          }`
-        );
-      });
-    });
+  let valueText = item.value || "";
+
+  if (item.values) {
+    valueText = Object.entries(item.values)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join(" | ");
+  }
+
+  doc.text(
+    `${item.label} | ${statusText} | ${valueText}`
+  );
+});
 
     // Bemerkungen
     doc.moveDown();
