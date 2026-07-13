@@ -56,7 +56,6 @@ const selectedCategory =
   );
 
   const [remarks, setRemarks] = useState("");
-  const [technician, setTechnician] = useState("");
   const [isSending, setIsSending] = useState(false);
   // ✅ ✅ NEU: BILDER
   const [images, setImages] = useState({});
@@ -250,7 +249,7 @@ if (
       sections,
       decisions,
       remarks,
-      technician,
+      technician: localStorage.getItem("technician"),
 
       signatures: {
         techniker:
@@ -319,7 +318,6 @@ if (
 
     setRemarks("");
     setImages({});
-    setTechnician("");
 
     technicianSignatureRef.current?.clear();
 
@@ -529,24 +527,6 @@ if (
     );
   };
 
-  const renderTechnician = () => (
-    <section className="card">
-      <h2>Techniker</h2>
-  
-      <select
-        value={technician}
-        onChange={e => setTechnician(e.target.value)}
-      >
-        <option value="">Bitte wählen</option>
-  
-        <option value="Marcel Schindler">Marcel Schindler</option>
-        <option value="Alin Costin">Alin Costin</option>
-        <option value="Tamara Bühler">Tamara Bühler</option>
-        <option value="Marco Fischer-Jung">Marco Fischer-Jung</option>
-      </select>
-    </section>
-  );
-
   const renderSignatures = () => {
     return (
       <section className="card">
@@ -589,7 +569,6 @@ if (
       {renderMetaFields()}
       {renderSections()}
       {renderRemarks()}
-      {renderTechnician()}
       {renderSignatures()}
       {renderImages()}
 
