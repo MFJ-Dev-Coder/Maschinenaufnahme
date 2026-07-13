@@ -138,6 +138,7 @@ const updateMeasurementValue = (
     setDecisions(prev => ({ ...prev, [id]: value }));
   };
 
+  
  
 
   // ✅ BILDER UPLOAD
@@ -149,12 +150,20 @@ const updateMeasurementValue = (
   };
 
   // ✅ SUBMIT (JETZT MIT FORM DATA + DESIGN)
-  const handleSubmit = async () => {
+ const handleSubmit = async () => {
+
+  const technician =
+    localStorage.getItem("technician");
+
+  if (!technician) {
+    alert("Kein Techniker angemeldet.");
+    return;
+  }
 
   if (isSending) return;
 
   setIsSending(true);
-
+   
   try {
 
     const missingRequired = [];
@@ -245,19 +254,18 @@ if (
     const formData = new FormData();
 
     const payload = {
-      meta,
-      sections,
-      decisions,
-      remarks,
-      technician: localStorage.getItem("technician"),
-
-      signatures: {
-        techniker:
-          technicianSignatureRef.current
-            ?.getCanvas()
-            .toDataURL("image/png")
-      }
-    };
+  meta,
+  sections,
+  decisions,
+  remarks,
+  technician,
+  signatures: {
+    techniker:
+      technicianSignatureRef.current
+        ?.getCanvas()
+        .toDataURL("image/png")
+  }
+};
 
     formData.append(
       "data",
