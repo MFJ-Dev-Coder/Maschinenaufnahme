@@ -98,10 +98,10 @@ const updateMeasurementValue = (
           if (iIdx !== itemIndex) return item;
 
           return {
-            ...item,
-            values: {
-              ...(item.values || {}),
-              value
+                  ...item,
+          values: {
+                  ...(item.values || {}),
+          [measurement]: value
             }
           };
         })
