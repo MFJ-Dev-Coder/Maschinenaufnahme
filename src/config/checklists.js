@@ -755,7 +755,7 @@ meta: {
           items: [
             { label: "Reifen", required: true },
             { label: "Reifenart", required: true },
-            { label: "Reifengröße", measurements: ["VA", "HA"], required: true }
+            { label: "Reifengröße", measurements: ["VA", "HA"], required: true },
             { label: "Reifenanzahl", measurements: ["VA", "HA"], required: true }
           ]
         },
