@@ -503,13 +503,14 @@ if (
           <span>
   {key}
   <span
-    style={{
-      color: "red",
-      fontWeight: "bold",
-      marginLeft: "4px"
-    }}
-  >
-  </span>
+  style={{
+    color: "red",
+    fontWeight: "bold",
+    marginLeft: "4px"
+  }}
+>
+  *
+</span>
 </span>
           <input
   key={`${key}-${Object.keys(images).length}`}
