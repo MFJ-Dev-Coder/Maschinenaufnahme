@@ -68,8 +68,7 @@ export default function LoginPage() {
         </form>
 
         <p className="hint">
-          Demo-Zugang: Benutzername <strong>admin</strong>, Passwort{' '}
-          <strong>admin</strong>
+            Die Zugangsdaten (Benutzername und Passwort) erhalten Sie vom Administrator.
         </p>
       </div>
     </div>
