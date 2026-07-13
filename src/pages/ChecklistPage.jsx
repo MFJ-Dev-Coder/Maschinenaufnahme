@@ -153,7 +153,7 @@ const updateMeasurementValue = (
  const handleSubmit = async () => {
 
   const technician =
-    localStorage.getItem("technician");
+    sessionStorage.getItem("technician");
 
   if (!technician) {
     alert("Kein Techniker angemeldet.");
