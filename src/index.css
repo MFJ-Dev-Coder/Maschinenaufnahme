@@ -355,6 +355,15 @@ textarea {
   color: #e3000f;
   font-size: 1.1rem;
 }
+.user-info {
+  min-width: 220px;
+  text-align: right;
+}
+
+.user-info strong {
+  white-space: nowrap;
+  color: #e3000f;
+}
 
 /* =========================
    LOGIN PAGE PIECKERT
