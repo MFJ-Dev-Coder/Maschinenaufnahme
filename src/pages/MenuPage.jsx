@@ -22,6 +22,19 @@ export default function MenuPage() {
 
     </div>
 
+<div className="menu-brand">
+
+  <img
+    src="/logo.png"
+    alt="Stapler Center Pieckert"
+    className="menu-logo"
+  />
+
+p>
+  </div>
+
+</div>
+    
     <div className="menu-list">
       {Object.values(CHECKLIST_CATEGORIES).map(cat => (
         <Link
