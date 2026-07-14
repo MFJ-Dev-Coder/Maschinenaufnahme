@@ -5,6 +5,9 @@ import { useAuth } from '../context/AuthContext';
 export default function SelectionPage() {
   const { logout } = useAuth();
 
+const technician =
+  sessionStorage.getItem("technician");
+  
   return (
     <div className="page">
       <header className="header">
@@ -15,6 +18,10 @@ export default function SelectionPage() {
         <button type="button" className="button button--ghost" onClick={logout}>
           Abmelden
         </button>
+        <div className="user-info">
+  Angemeldet als:
+  <strong>{technician}</strong>
+</div>
       </header>
 
       <div className="selection-grid">
