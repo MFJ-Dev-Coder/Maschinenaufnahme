@@ -38,25 +38,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-card">
+  <div className="login-page">
+    <div className="login-card">
 
-        .png"
-          alt="Stapler Center Pieckert"
-          className="login-logo"
-        />
+      <img
+        src="/Pieckert Logo.png"
+        alt="Stapler Center Pieckert"
+        className="login Geräteaufnahme für Service,
+        Verkauf und Werkstatt
+      </p>
 
-        <h1>Maschinenaufnahme</h1>
-
-        <p className="subtitle">
-          Interne Geräteaufnahme für Service,
-          Verkauf und Werkstatt
-        </p>
-
-        <form
-          className="form"
-          onSubmit={handleSubmit}
-        >
+      <form
+        className="form"
+        onSubmit={handleSubmit}
+      >
           <label className="field">
             <span>Benutzername</span>
 
