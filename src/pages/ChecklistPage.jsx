@@ -577,9 +577,6 @@ return (
       className="menu-logo"
     />
 
-    <div>
-    v>
-
   </div>
 
   <div className="user-info">
