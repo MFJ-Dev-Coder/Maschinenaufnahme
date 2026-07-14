@@ -46,7 +46,7 @@ export default function LoginPage() {
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               autoComplete="username"
-              placeholder="admin"
+              placeholder="Benutzername eingeben"
             />
           </label>
 
@@ -57,6 +57,7 @@ export default function LoginPage() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               autoComplete="current-password"
+              placeholder="Passwort eingeben"
             />
           </label>
 
