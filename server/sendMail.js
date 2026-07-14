@@ -107,11 +107,11 @@ app.post("/sendMail", upload.any(), async (req, res) => {
     // Gerätedaten
     doc.fontSize(14).text("Gerätedaten");
 
-    Object.entries(meta || {}).forEach(
-      ([k, v]) => {
-        doc.fontSize(12).text(`${k}: ${v}`);
-      }
-    );
+    schema.meta.fields.forEach(field => {
+  doc.fontSize(12).text(
+    `${field.label}: ${meta[field.id] || ""}`
+  );
+});
 
     doc.moveDown();
 
