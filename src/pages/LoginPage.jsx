@@ -38,20 +38,22 @@ export default function LoginPage() {
   };
 
   return (
-  <div className="login-page">
-    <div className="login-card">
+    <div className="login-page">
+      <div className="login-card">
 
-      <img
-        src="/Pieckert Logo.png"
-        alt="Stapler Center Pieckert"
-        className="login Geräteaufnahme für Service,
-        Verkauf und Werkstatt
-      />
+        /Pieckert Logo.png
 
-      <form
-        className="form"
-        onSubmit={handleSubmit}
-      >
+        <h1>Maschinenaufnahme</h1>
+
+        <p className="subtitle">
+          Interne Geräteaufnahme für Service,
+          Verkauf und Werkstatt
+        </p>
+
+        <form
+          className="form"
+          onSubmit={handleSubmit}
+        >
           <label className="field">
             <span>Benutzername</span>
 
@@ -95,12 +97,10 @@ export default function LoginPage() {
         </form>
 
         <p className="hint">
-          Die Zugangsdaten erhalten Sie vom
-          Administrator.
+          Die Zugangsdaten erhalten Sie vom Administrator.
         </p>
 
       </div>
     </div>
   );
 }
-`
