@@ -2,7 +2,7 @@ export const CHECKLIST_CATEGORIES = {
   lagertechnik: {
     id: "lagertechnik",
     title: "Lagertechnik inkl. Schubmaststapler",
-    description: "Komplette Geräteaufnahme",
+    description: "Geräteaufnahme von Niederhubwagen, Hochhubwagen, Kommissionierern, Schubmaststaplern und weiterer Lagertechnik. Alle relevanten Baugruppen, Batterie-, Mast- und Zustandsdaten erfassen.",
 
     schema: {
       meta: {
@@ -283,7 +283,7 @@ export const CHECKLIST_CATEGORIES = {
 verbrenner: {
   id: "verbrenner",
   title: "Verbrenner",
-  description: "Diesel / Gas Stapler",
+  description: "Geräteaufnahme von Diesel- und Treibgasstaplern. Motor, Hydraulik, Mast, Bereifung und allgemeiner Gerätezustand vollständig dokumentieren.",
 
   schema: {
     
@@ -568,7 +568,7 @@ meta: {
   elektro: {
     id: "elektro",
     title: "Elektro",
-    description: "Elektrostapler",
+    description: "Geräteaufnahme von Elektrostaplern. Batterie, Motor, Hydraulik, Mast, Bereifung und allgemeiner Gerätezustand vollständig dokumentieren.",
   
     schema: {
       meta: {
