@@ -46,7 +46,7 @@ export default function LoginPage() {
         alt="Stapler Center Pieckert"
         className="login Geräteaufnahme für Service,
         Verkauf und Werkstatt
-      </p>
+      />
 
       <form
         className="form"
