@@ -566,24 +566,28 @@ if (
   };
 
 return (
-  <div className="page">
+<div className="page">
+<header className="header">
 
-    <header className="header">
+  <div className="menu-brand">
 
-      <div className="menu-brand">
+    <img
+      src="/logo.png"
+      alt="Stapler Center Pieckert"
+      className="menu-logo"
+    />
 
-       <img
-  src="/logo.png"
-  alt="Stapler ry.title}</h1>
-  <p>{selectedCategory.description}</p>
-</div>
+    <div>
+    v>
 
-      <div className="user-info">
-        <span>Angemeldet als</span>
-        <strong>{technician}</strong>
-      </div>
+  </div>
 
-    </header>
+  <div className="user-info">
+    <span>Angemeldet als</span>
+    <strong>{technician}</strong>
+  </div>
+
+</header>
 
     <Link
       to="/"
