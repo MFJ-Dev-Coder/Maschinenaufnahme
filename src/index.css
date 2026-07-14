@@ -461,3 +461,62 @@ textarea {
   font-weight: bold;
   margin-left: 4px;
 }
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  color: white;
+}
+
+.user-info strong {
+  color: #e3000f;
+  margin-top: 4px;
+}
+
+.menu-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.menu-item {
+  display: block;
+
+  background: #1d1d1d;
+
+  border: 1px solid #333;
+
+  border-radius: 16px;
+
+  padding: 1.5rem;
+
+  color: white;
+
+  transition: all 0.2s;
+}
+
+.menu-item:hover {
+  border-color: #e3000f;
+  transform: translateY(-2px);
+}
+
+.menu-item h2 {
+  margin-bottom: 10px;
+  color: white;
+}
+
+.menu-item p {
+  color: #c7c7c7;
+}
+
+
+
+
