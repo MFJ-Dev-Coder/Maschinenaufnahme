@@ -572,7 +572,7 @@ return (
   <div className="menu-brand">
 
     <img
-      s<div className="menu-brand">
+      <div className="menu-brand">
 
   <img
     src="/logo.png"
