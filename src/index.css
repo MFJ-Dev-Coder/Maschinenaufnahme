@@ -12,6 +12,9 @@
 }
 
 body {
+  margin: 0;
+  min-height: 100vh;
+
   background:
     linear-gradient(
       135deg,
@@ -28,10 +31,10 @@ a {
 }
 
 h1,
-h2,
-p {
-  margin: 0;
+h2 {
+  color: white;
 }
+
 
 button,
 input,
@@ -208,16 +211,40 @@ textarea {
   display: grid;
   gap: 0.75rem;
   padding: 1.5rem;
+
   border-radius: 16px;
-  background: #fff;
-  border: 1px solid #dbeafe;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  background: #1d1d1d;
+
+  border: 1px solid #333;
+
+  color: white;
+
+  box-shadow:
+    0 10px 30px rgba(
+      0,
+      0,
+      0,
+      0.4
+    );
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .selection-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.12);
+
+  border-color: #e3000f;
+
+  box-shadow:
+    0 16px 40px rgba(
+      227,
+      0,
+      15,
+      0.15
+    );
 }
 
 .selection-card h2 {
@@ -229,9 +256,10 @@ textarea {
 }
 
 .selection-card__action {
-  color: #2563eb;
+  color: #e3000f;
   font-weight: 600;
 }
+``
 
 .back-link {
   display: inline-block;
@@ -319,13 +347,13 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 6px;
 
-  color: white;
+  color: #bdbdbd;
 }
 
 .user-info strong {
   color: #e3000f;
+  font-size: 1.1rem;
 }
 
 /* =========================
@@ -521,6 +549,15 @@ textarea {
   color: #c7c7c7;
 }
 
+.menu-brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
+.menu-logo {
+  height: 70px;
+  width: auto;
+}
 
 
