@@ -572,10 +572,11 @@ return (
   <div className="menu-brand">
 
    <img
-  src="/logo.png"
-  alt="Stapler Center Pieckert"
-  className="menu-logo"
-/>
+          src="/Pieckert Logo.png"
+          alt="Stapler Center Pieckert"
+          className="login-logo"
+        />
+
 
 <div>
   <h1>{selectedCategory.title}</h1>
