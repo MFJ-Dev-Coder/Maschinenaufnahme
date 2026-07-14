@@ -567,8 +567,15 @@ if (
     <div className="page">
 
       <header className="header">
-  <h1>{selectedCategory.title}</h1>
-  <p>{selectedCategory.description}</p>
+  <div>
+    <h1>{selectedCategory.title}</h1>
+    <p>{selectedCategory.description}</p>
+  </div>
+
+  <div className="user-info">
+    Angemeldet als:
+    <strong>{technician}</strong>
+  </div>
 </header>
 
       <Link to="/" className="button button--secondary">
