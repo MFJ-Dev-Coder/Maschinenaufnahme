@@ -572,12 +572,11 @@ return (
   <div className="menu-brand">
 
     <img
-      src="/logo.png"
-      alt="Stapler Center Pieckert"
-      className="menu-logo"
-    />
+      s<div className="menu-brand">
 
-  </div>
+  <img
+    src="/logo.png"
+    alt="Stapler
 
   <div className="user-info">
     <span>Angemeldet als</span>
@@ -585,34 +584,6 @@ return (
   </div>
 
 </header>
-
-    <Link
-      to="/"
-      className="button button--secondary"
-    >
-      ← Zurück zum Menü
-    </Link>
-
-    {renderMetaFields()}
-    {renderSections()}
-    {renderRemarks()}
-    {renderSignatures()}
-    {renderImages()}
-
-    <section className="card card--actions">
-      <button
-        className="button button--primary"
-        onClick={handleSubmit}
-        disabled={isSending}
-      >
-        {isSending
-          ? "Wird gesendet..."
-          : "Checkliste abschließen"}
-      </button>
-    </section>
-
-  </div>
-);
 
       <Link to="/" className="button button--secondary">
         ← Zurück zum Menü
