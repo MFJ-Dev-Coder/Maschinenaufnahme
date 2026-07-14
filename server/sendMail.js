@@ -115,9 +115,8 @@ app.post("/sendMail", upload.any(), async (req, res) => {
     doc.fontSize(12).text(`${label}: ${v}`);
   }
 );
-    });
 
-    doc.moveDown();
+doc.moveDown();
 
     // Prüfungen
     doc.fontSize(14).text("Prüfungen");
