@@ -41,7 +41,12 @@ export default function LoginPage() {
     <div className="login-page">
       <div className="login-card">
 
-        /Pieckert Logo.png
+        <img
+          src="/Pieckert Logo.png"
+          alt="Stapler Center Pieckert"
+          className="login-logo"
+        />
+
 
         <h1>Maschinenaufnahme</h1>
 
