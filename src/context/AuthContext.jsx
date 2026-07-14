@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 const USERS = [
   {
     username: "marco",
-    password: "1234",
+    password: "MFJ",
     name: "Marco Fischer-Jung"
   },
   {
@@ -15,12 +15,17 @@ const USERS = [
   },
   {
     username: "alin",
-    password: "1234",
+    password: "0305",
     name: "Alin Costin"
   },
   {
+    username: "test",
+    password: "test",
+    name: "Test User"
+  },
+  {
     username: "tamara",
-    password: "1234",
+    password: "tami1234",
     name: "Tamara Bühler"
   }
 ];
