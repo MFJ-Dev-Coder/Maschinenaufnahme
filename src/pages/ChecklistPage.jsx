@@ -572,28 +572,23 @@ return (
 
       <div className="menu-brand">
 
-        <img
-          src="/logo.png"
-          alt="Stapler Center Pieckert"
-          className="menu-logo"
-        />
-
->
-        </div>
-
-      </div>
+       <img
+  src="/logo.png"
+  alt="Stapler ry.title}</h1>
+  <p>{selectedCategory.description}</p>
+</div>
 
       <div className="user-info">
         <span>Angemeldet als</span>
-
-        <strong>
-          {technician}
-        </strong>
+        <strong>{technician}</strong>
       </div>
 
     </header>
 
-    <Link to="/" className="button button--secondary">
+    <Link
+      to="/"
+      className="button button--secondary"
+    >
       ← Zurück zum Menü
     </Link>
 
