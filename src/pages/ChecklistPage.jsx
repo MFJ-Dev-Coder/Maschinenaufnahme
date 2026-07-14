@@ -572,11 +572,11 @@ return (
   <div className="menu-brand">
 
     <img
-      <div className="menu-brand">
+      src="/logo.png"
+      alt="Stapler Center Pieckert      <p>{selectedCategory.description}</p>
+    </div>
 
-  <img
-    src="/logo.png"
-    alt="Stapler
+  </div>
 
   <div className="user-info">
     <span>Angemeldet als</span>
