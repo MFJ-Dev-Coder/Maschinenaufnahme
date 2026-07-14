@@ -156,9 +156,6 @@ const updateMeasurementValue = (
   // ✅ SUBMIT (JETZT MIT FORM DATA + DESIGN)
  const handleSubmit = async () => {
 
-  const technician =
-    sessionStorage.getItem("technician");
-
   if (!technician) {
     alert("Kein Techniker angemeldet.");
     return;
@@ -567,29 +564,59 @@ if (
       </section>
     );
   };
-  return (
-    <div className="page">
 
-  <header className="header">
+return (
+  <div className="page">
 
-  <div className="menu-brand">
+    <header className="header">
 
-    <img
-      src="/logo.png"
-      alt="Stapler Center Pie/h1>
-      <p>{selectedCategory.description}</p>
-    </div>
+      <div className="menu-brand">
+
+        <img
+          src="/logo.png"
+          alt="Stapler Center Pieckert"
+          className="menu-logo"
+        />
+
+>
+        </div>
+
+      </div>
+
+      <div className="user-info">
+        <span>Angemeldet als</span>
+
+        <strong>
+          {technician}
+        </strong>
+      </div>
+
+    </header>
+
+    <Link to="/" className="button button--secondary">
+      ← Zurück zum Menü
+    </Link>
+
+    {renderMetaFields()}
+    {renderSections()}
+    {renderRemarks()}
+    {renderSignatures()}
+    {renderImages()}
+
+    <section className="card card--actions">
+      <button
+        className="button button--primary"
+        onClick={handleSubmit}
+        disabled={isSending}
+      >
+        {isSending
+          ? "Wird gesendet..."
+          : "Checkliste abschließen"}
+      </button>
+    </section>
 
   </div>
-
-  <div className="user-info">
-    <span>Angemeldet als</span>
-    <strong>
-      {sessionStorage.getItem("technician")}
-    </strong>
-  </div>
-
-</header>
+);
 
       <Link to="/" className="button button--secondary">
         ← Zurück zum Menü
