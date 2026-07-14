@@ -26,6 +26,10 @@ const selectedCategory =
   const schema = selectedCategory.schema;
 
   
+  const technician =
+  sessionStorage.getItem("technician");
+  
+  
   // ✅ META
   const [meta, setMeta] = useState(
     Object.fromEntries(
