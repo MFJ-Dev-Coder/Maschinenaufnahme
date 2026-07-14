@@ -570,16 +570,25 @@ if (
   return (
     <div className="page">
 
-      <header className="header">
-  <div>
-    <h1>{selectedCategory.title}</h1>
-    <p>{selectedCategory.description}</p>
+  <header className="header">
+
+  <div className="menu-brand">
+
+    <img
+      src="/logo.png"
+      alt="Stapler Center Pie/h1>
+      <p>{selectedCategory.description}</p>
+    </div>
+
   </div>
 
   <div className="user-info">
-    Angemeldet als:
-    <strong>{technician}</strong>
+    <span>Angemeldet als</span>
+    <strong>
+      {sessionStorage.getItem("technician")}
+    </strong>
   </div>
+
 </header>
 
       <Link to="/" className="button button--secondary">
