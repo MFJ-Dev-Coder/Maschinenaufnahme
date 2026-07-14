@@ -501,19 +501,6 @@ textarea {
   margin-bottom: 2rem;
 }
 
-.user-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-
-  color: white;
-}
-
-.user-info strong {
-  color: #e3000f;
-  margin-top: 4px;
-}
-
 .menu-list {
   display: grid;
   gap: 1rem;
@@ -560,4 +547,15 @@ textarea {
   width: auto;
 }
 
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
+  color: #bdbdbd;
+}
+
+.user-info strong {
+  color: #e3000f;
+  font-size: 1rem;
+}
