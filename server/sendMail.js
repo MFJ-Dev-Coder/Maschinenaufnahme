@@ -125,6 +125,8 @@ doc
     align: "center"
   });
 
+doc.moveDown();
+
 doc.moveDown(2);
 
 doc.fontSize(12);
@@ -164,6 +166,8 @@ doc
 
 doc.moveDown();
 
+let y = doc.y;
+
 Object.entries(meta || {}).forEach(
   ([k, v]) => {
 
@@ -171,19 +175,23 @@ Object.entries(meta || {}).forEach(
       k.charAt(0).toUpperCase() +
       k.slice(1);
 
+    doc.rect(40, y, 180, 25).stroke();
+    doc.rect(220, y, 300, 25).stroke();
+
     doc
       .font("Helvetica-Bold")
-      .fontSize(11)
-      .text(`${label}: `, {
-        continued: true
-      });
+      .fontSize(10)
+      .text(label, 50, y + 7);
 
     doc
       .font("Helvetica")
-      .fontSize(11)
-      .text(v || "");
+      .text(v || "", 230, y + 7);
+
+    y += 25;
   }
 );
+
+doc.y = y + 20;
 
 doc.moveDown();
 
@@ -194,9 +202,20 @@ doc.moveDown();
   doc.moveDown();
 
  doc
-  .fontSize(14)
-.fillColor("red")
-.text(section.title);
+  .moveDown()
+  .font("Helvetica-Bold")
+  .fontSize(13)
+  .fillColor("#e3000f")
+  .text(section.title);
+
+doc
+  .moveTo(40, doc.y)
+  .lineTo(550, doc.y)
+  .stroke();
+
+doc.fillColor("black");
+
+doc.moveDown(0.5);
 
 doc.fillColor("black");
 
@@ -215,24 +234,43 @@ doc.moveDown(0.3);
 
     let valueText = item.value || "";
 
-    if (item.values) {
-      valueText = Object.entries(item.values)
-        .map(([k, v]) => `${k}: ${v}`)
-        .join(" | ");
-    }
+   if (item.values) {
 
+  doc.moveDown(0.2);
+
+  Object.entries(item.values)
+    .forEach(([k, v]) => {
+
+      doc
+        .fontSize(9)
+        .fillColor("#555555")
+        .text(`   ${k}: ${v}`);
+
+    });
+
+  doc.fillColor("black");
+}
   
 doc
-  .font("Helvetica-Bold")
+  .font("Helvetica")
   .fontSize(10)
-  .text(item.label, {
-    continued: true,
-    width: 250
-  });
+  .text(
+    item.label,
+    50,
+    doc.y,
+    {
+      width: 300
+    }
+  );
 
 doc
-  .font("Helvetica")
-  .text(` - ${statusText}`);
+  .font("Helvetica-Bold")
+  .text(
+    statusText,
+    380,
+    doc.y - 12
+  );
+
 
 if (valueText) {
   doc
@@ -322,10 +360,17 @@ doc.font("Helvetica");
 
     try {
 
-      doc.image(file.path, pos.x, pos.y, {
-        fit: [220, 160],
-        align: "center"
-      });
+doc.rect(
+  pos.x - 5,
+  pos.y - 5,
+  230,
+  185
+).stroke();
+
+doc.image(file.path, pos.x, pos.y, {
+  fit: [220, 160],
+  align: "center"
+});
 
       const imageTitle = file.filename
         .replace(`_${internnummer}`, "")
