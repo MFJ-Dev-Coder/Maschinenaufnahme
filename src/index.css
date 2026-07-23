@@ -68,6 +68,15 @@ textarea {
 }
 
 .card {
+  color: #000;
+}
+
+.card h2,
+.card h3 {
+  color: #000;
+}
+
+.card {
   background: #ffffff;
   border: 1px solid #dbeafe;
   border-radius: 16px;
