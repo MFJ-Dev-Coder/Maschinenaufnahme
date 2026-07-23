@@ -82,7 +82,9 @@ app.post("/sendMail", upload.any(), async (req, res) => {
     const pdfPath =
       `uploads/checkliste_${internnummer}_${date}.pdf`;
 
-    const doc = new PDFDocument();
+    const doc = new PDFDocument({
+  margin: 40
+});
 
     const stream = fs.createWriteStream(pdfPath);
 
@@ -95,24 +97,91 @@ app.post("/sendMail", upload.any(), async (req, res) => {
 
     doc.pipe(stream);
 
-    // Titel
+   // =================================
+// DECKBLATT
+// =================================
+const logoPath = path.join(
+  __dirname,
+  "../public/Pieckert Logo.png"
+);
+    
+if (fs.existsSync(logoPath)) {
+  doc.image(
+    logoPath,
+    140,
+    30,
+    { width: 280 }
+  );
+}
+
+doc.y = 180;
+
+doc.moveDown();
+
+doc
+  .fontSize(18)
+  .font("Helvetica")
+  .text("Geräteaufnahme", {
+    align: "center"
+  });
+
+doc.moveDown(2);
+
+doc.fontSize(12);
+Object.entries(meta || {}).forEach(
+  ([key, value]) => {
+
+    const label =
+      key.charAt(0).toUpperCase() +
+      key.slice(1);
+
+    doc.text(
+      `${label}: ${value || ""}`
+    );
+
+  }
+);
+
+doc.moveDown();
+
+doc.text(`Techniker: ${technician || ""}`);
+
+doc.text(
+  `Datum: ${new Date().toLocaleDateString("de-DE")}`
+);
+
+doc.addPage();
+
+// =================================
+// GERÄTEDATEN
+// =================================
+
+doc
+  .fontSize(16)
+  .text("Gerätedaten", {
+    underline: true
+  });
+
+doc.moveDown();
+
+Object.entries(meta || {}).forEach(
+  ([k, v]) => {
+
+    const label =
+      k.charAt(0).toUpperCase() +
+      k.slice(1);
+
     doc
-      .fontSize(18)
-      .text("Geräteaufnahme", {
-        underline: true
+      .font("Helvetica-Bold")
+      .fontSize(11)
+      .text(`${label}: `, {
+        continued: true
       });
 
-    doc.moveDown();
-
-    // Gerätedaten
-    doc.fontSize(14).text("Gerätedaten");
-
-    Object.entries(meta || {}).forEach(
-  ([k, v]) => {
-    const label =
-      k.charAt(0).toUpperCase() + k.slice(1);
-
-    doc.fontSize(12).text(`${label}: ${v}`);
+    doc
+      .font("Helvetica")
+      .fontSize(11)
+      .text(v || "");
   }
 );
 
@@ -124,12 +193,14 @@ doc.moveDown();
     sections.forEach((section) => {
   doc.moveDown();
 
-  doc.fontSize(12).text(
-    section.title,
-    {
-      underline: true
-    }
-  );
+ doc
+  .fontSize(14)
+.fillColor("red")
+.text(section.title);
+
+doc.fillColor("black");
+
+doc.moveDown(0.3);
 
   section.items.forEach((item) => {
     let statusText = "Nicht geprüft";
@@ -150,16 +221,33 @@ doc.moveDown();
         .join(" | ");
     }
 
-    doc.text(
-      `${item.label} | ${statusText} | ${valueText}`
-    );
+  
+doc
+  .font("Helvetica-Bold")
+  .fontSize(10)
+  .text(item.label, {
+    continued: true,
+    width: 250
+  });
+
+doc
+  .font("Helvetica")
+  .text(` - ${statusText}`);
+
+if (valueText) {
+  doc
+    .fontSize(9)
+    .fillColor("#555555")
+    .text(valueText);
+
+  doc.fillColor("black");
+}
+
+doc.moveDown(0.2);
   });
 
 }); 
-
-// Bemerkungen
-doc.moveDown();
-
+    
     // Bemerkungen
     doc.moveDown();
     doc.fontSize(14).text("Bemerkungen");
@@ -167,8 +255,16 @@ doc.moveDown();
 
     // Techniker
     doc.moveDown();
-    doc.fontSize(14).text("Techniker");
-    doc.fontSize(12).text(technician || "");
+doc
+  .fontSize(14)
+  .text("Techniker");
+
+doc
+  .fontSize(12)
+  .font("Helvetica-Bold")
+  .text(technician || "");
+
+doc.font("Helvetica");
 
     // Unterschrift
     doc.moveDown();
@@ -202,29 +298,74 @@ doc.moveDown();
 
     // Bilder
     if (req.files?.length) {
-      doc.addPage();
-      doc.fontSize(14).text("Bilder");
 
-      req.files.forEach((file) => {
-        try {
-          doc.addPage();
+  doc.addPage();
 
-          doc.image(file.path, {
-            fit: [400, 300],
-            align: "center"
-          });
+  doc
+    .fontSize(16)
+    .text("Bildanhang", {
+      underline: true
+    });
 
-          doc.moveDown();
-          doc.text(file.filename);
-        } catch (err) {
-          console.log(
-            "⚠️ Bild konnte nicht geladen werden:",
-            file.filename
-          );
-        }
+  doc.moveDown();
+
+  let positions = [
+    { x: 40, y: 90 },
+    { x: 300, y: 90 },
+    { x: 40, y: 330 },
+    { x: 300, y: 330 }
+  ];
+
+  req.files.forEach((file, index) => {
+
+    const pos = positions[index % 4];
+
+    try {
+
+      doc.image(file.path, pos.x, pos.y, {
+        fit: [220, 160],
+        align: "center"
       });
+
+      const imageTitle = file.filename
+        .replace(`_${internnummer}`, "")
+        .replace(/_/g, " ");
+
+      doc.text(
+        imageTitle,
+        pos.x,
+        pos.y + 170,
+        {
+          width: 220,
+          align: "center"
+        }
+      );
+
+    } catch (err) {
+      console.log(
+        "⚠️ Bild konnte nicht geladen werden:",
+        file.filename
+      );
     }
 
+    if (
+      (index + 1) % 4 === 0 &&
+      index < req.files.length - 1
+    ) {
+      doc.addPage();
+
+      doc
+        .fontSize(16)
+        .text("Bildanhang", {
+          underline: true
+        });
+
+      doc.moveDown();
+    }
+
+  });
+
+}
     doc.end();
 
     await new Promise((resolve, reject) => {
