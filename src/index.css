@@ -30,11 +30,17 @@ a {
   text-decoration: none;
 }
 
-h1,
-h2 {
+.card h1,
+.card h2,
+.card h3 {
   color: black;
 }
 
+.menu-header h1 {
+  color: #f8fafc;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
 
 button,
 input,
