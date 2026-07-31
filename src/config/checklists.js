@@ -30,146 +30,355 @@ export const CHECKLIST_CATEGORIES = {
             optionsByParent: {
           
               Linde: [
-                // Niederhubwagen
+            //   Niederhubwagen
+                "MT12",
+                "MT15",
                 "T14",
                 "T16",
                 "T18",
                 "T20",
+                "T20AP",
+                "T20SP",
+                "T20SF",
+                "T20SR",
+                "T20R",
                 "T25",
-                "MT15",
-          
-                // Hochhubwagen
+                "T30",
+                "T33",
+                "T50",
+
+             //   Doppelstock-Niederhubwagen
+                "D06",
+                "D08",
+                "D10",
+                "D12",
+                "D12HP",
+                "D14",
+                "D14AP",
+                "D14HP",
+
+           //     Hochhubwagen
                 "L10",
+                "L10B",
                 "L12",
+                "L12B",
                 "L14",
+                "L14AP",
+                "L14C",
                 "L16",
+                "L16AP",
+                "L16AC",
                 "L20",
-          
-                // Schubmaststapler
+                "L20AP",
+
+               // Schubmaststapler
                 "R10",
+                "R12",
                 "R14",
                 "R16",
+                "R17",
                 "R20",
+                "R20HD",
                 "R25",
-          
-                // Kommissionierer
+                "R14X",
+                "R20G",
+                "R25G",
+                
+             //   Kommissionierer
                 "N20",
-                "N20 XL",
-                "V08",
+                "N20B",
+                "N20HP",
+                "N20D",
+                "N20DHP",
+                "N20XL",
+                "N20L",
+                "N20LoL",
+                "N16Li",
+
+               // Schmalgangstapler (VNA)
+                "K",
+                "K-M",
+                "K-L",
                 "V10",
-          
-                // Schmalgangstapler
-                "K"
+                "V12"
               ],
           
               Still: [
-                // Niederhubwagen
-                "EXU16",
-                "EXU18",
-                "EXU20",
-                "EXU22",
-                "EXH14",
+               //Niederhubwagen
+                "EXH14C",
+                "EXH16",
+                "EXH16C",
                 "EXH20",
+                "EXH20C",
                 "EXH25",
-          
-                // Hochhubwagen
-                "EXV10",
-                "EXV12",
-                "EXV14",
-                "EXV16",
+                "EXH30",
+                "EXH-L16",
+                "EXH-L20",
+                "EXH-S20",
+                "EXH-S25",
+                "EXH-SF16C",
+                "EXH-SF20",
+                "EXH-SF20C",
+                "EXH-SF25",
+                "FXH20",
+                "FXH20N",
+                "FXH25",
+                "FXH25N",
+                "FXH33",
+
+               // Doppelstock-Niederhubwagen
                 "EXD18",
-          
-                // Schubmaststapler
+                "EXD18C",
+                "EXD20",
+                "EXD20C",
+                "SXD20",
+
+                //Hochhubwagen
+                "EXV10C",
+                "EXV12C",
+                "EXV14",
+                "EXV14i",
+                "EXV16",
+                "EXV16C",
+                "EXV16i",
+                "EXV20",
+                "EXV20i",
+                "EXV-SF14",
+                "EXV-SF16",
+                "EXV-SF20",
+                "EXV-CB10",
+                "EXV-CB12",
+                "EXV-CB14",
+                "EXV-CB16",
+                "SXV-CB10",
+                "SXV-CB12",
+                "SXV-CB14",
+                "SXV-CB16",
+
+                //Schubmaststapler
                 "FM-X10",
+                "FM-X10N",
                 "FM-X12",
+                "FM-X12N",
                 "FM-X14",
+                "FM-X14N",
                 "FM-X17",
+                "FM-X17N",
                 "FM-X20",
-                "FM-X25",
-          
-                // Kommissionierer
-                "OPX20",
+                "FM-X20N",
+                "FM-XSE14",
+                "FM-XSE20",
+                "FM-4W20",
+                "FM-4W25",
+                "FXV14",
+                "FXV16",
+                "FXV16N",
+
+               // Kommissionierer
+                "OPX20Plus",
                 "OPX25",
+                "OPX25Plus",
+                "OPX-L12",
+                "OPX-L16",
                 "OPX-L20",
-          
-                // Schmalgangstapler
-                "MX-X"
+                "OPX-L20S",
+                "OPX-D20",
+                "OXV07",
+                "OXV08",
+                "OXV10",
+
+                //Schmalgangstapler (VNA)
+                "MX-X",
+                "NXV",
+                "PXV",
+                "PXV-M",
+                "EK-X10",
+
               ],
           
               Jungheinrich: [
                 // Niederhubwagen
-                "EJE112",
+                "AME15",
+                "AME20",
+                "EJE114",
                 "EJE116",
                 "EJE118",
                 "EJE120",
+                "EJE222",
                 "EJE225",
-          
-                // Hochhubwagen
-                "EJC110",
-                "EJC112",
+                "EJE230",
+                "EJE235",
+                "EJEC20",
+                "EJEC20i",
+
+                //Doppelstock-Niederhubwagen
+                "EJD118i",
+                "EJD120",
+                "EJD120i",
+                "EJD220",
+                "EJD222",
+                "ECD320",
+
+               // Hochhubwagen
+                "EJC112i",
+                "EJC110zi",
+                "EJC112zi",
+                "EJC212",
                 "EJC214",
-                "ERC212",
-                "ERC214",
-                "ERC216",
-          
-                // Schubmaststapler
+                "EJC216",
+                "EJC220",
+                "EJC212z",
+                "EJC214z",
+                "EJC216z",
+                "EJC220z",
+
+              //  Schubmaststapler
                 "ETM214",
+                "ETM216",
+                "ETV214i",
+                "ETV216i",
                 "ETV214",
                 "ETV216",
+                "ETV214i",
                 "ETV216i",
                 "ETV318",
                 "ETV320",
-          
-                // Kommissionierer
+                "ETV325",
+                "ETV314i",
+                "ETV316i",
+                "ETV320i",
+                "ETV325i",
+                "ETVC16",
+                "ETVC20",
+                "ETVQ20",
+                "ETVQ25",
+
+            //    Kommissionierer
                 "ECE220",
                 "ECE225",
+                "ECE227",
+                "ECE230",
+                "ECE310",
+                "ECE320",
                 "EKS110",
-                "EKS215a",
-          
-                // Schmalgangstapler
+                "EKS210",
+                "EKS310",
+                "EKS310s",
+                "EKS412",
+                "EKS412s",
+                "EKM202",
+
+          //      Schmalgangstapler (VNA)
                 "EKX410",
-                "EKX513"
+                "EKX412",
+                "EKX514",
+                "EKX516",
+                "EFX411",
+                "EFX414"
+
               ],
           
               Yale: [
+                "MPC14",
+                "MPC15",
                 "MP16",
                 "MP18",
                 "MP20",
+                "MP22",
+                "MP25",
+                "MP30",
+                "MP20DL",
+                "MP20XUX",
+                "MP20T",
+                "MP25T",
+                "MP20X",
+                "MP30X",
+                "MP25HD",
+                "MP30HD",
+                "MSC10",
+                "MS10E",
+                "MS12E",
                 "MS10",
                 "MS12",
+                "MS14",
                 "MS16",
+                "MS20",
+                "MS12X",
+                "MS14XIL",
+                "MS12XIL",
+                "MS15X",
+                "MS16IL",
+                "MS16SL",
+                "MC10",
+                "MC12",
+                "MC15",
+                "MR10",
+                "MR12",
                 "MR14",
                 "MR16",
                 "MR20",
+                "MRO16",
+                "MRO20",
+                "MO10E",
                 "MO20",
-                "MO25"
+                "MO20S",
+                "MO20F",
+                "MO25",
+                "MO25P",
+                "MO25T",
+                "MO50T",
+                "MT70",
+                "MT80",
+                "MTC10",
+                "MTC13",
+                "MTC15"
+
               ],
           
               Heli: [
-                "CBD15",
-                "CBD20",
-                "CBD25",
-                "CDD12",
-                "CDD16",
-                "CDD20",
+             //  Niederhubwagen
+                "CBD15-18-20J-LI-S",
+                "CBD15-18-20J-LI3",
+                "CBD15-20-A-BLIH",
+                "CBD16/20-C2LiH",
+                "CBD20-25J-R",
+                "CBD20-A2SZLIH",
+                "CBD20/25-491",
+                "CBD20/25/30-URD",
+                "CBD20J-H",
+
+                //Hochhubwagen
+                "CDD10-12RD-S",
+                "CDD12-15J-LI",
+                "CDD12JD",
+                "CDD15-20J-S",
+                "CDD15-ZSM",
+                "CDD16-950",
+                "CDD16/20-A2LIH",
+                "CDD20J-LI",
+                "CDD20R",
+
+                //Schubmaststapler
+                "CQD14",
                 "CQD16",
-                "CQD20",
-                "CQD25",
-                "CSD16"
+                "G2 Reach",
+
+                //Kommissionierer
+                "OPSM"
+
               ],
           
               Hangcha: [
-                "CBD15",
-                "CBD20",
-                "CBD25",
+               // Niederhubwagen
+                "CBD15-WS",
+                "CBD15-A3MC2-I",
+
+
+              //  Hochhubwagen
                 "CDD12",
+                "CDD14",
                 "CDD16",
-                "CDD20",
-                "CQD16",
-                "CQD20",
-                "CQD25",
-                "A Series Reach Truck",
-                "X Series Reach Truck"
+                "CDD20"
               ]
           
             }
