@@ -1,6 +1,4 @@
 import { useState } from "react";
-import MaschinenHistorieSuche
-  from "./pages/MaschinenHistorieSuche";
 export default function MaschinenHistorieSuche() {
 
   const [search, setSearch] = useState("");
