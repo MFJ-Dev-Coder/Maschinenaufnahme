@@ -420,6 +420,9 @@ doc.rect(
   185
 ).stroke();
 
+console.log("Dateipfad:", file.path);
+console.log("Existiert:", fs.existsSync(file.path));
+
 doc.image(file.path, pos.x, pos.y, {
   fit: [220, 160],
   align: "center"
