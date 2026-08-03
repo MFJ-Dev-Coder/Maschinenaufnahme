@@ -474,6 +474,68 @@ doc.image(file.path, pos.x, pos.y, {
   });
 
 }
+
+// =================================
+// DETAILBILDER
+// =================================
+
+if (req.files?.length) {
+
+  const detailImages = [
+    "Typenschild",
+    "Mastnummer",
+    "Motornummer",
+    "Anbaugerät",
+    "Batterie"
+];
+  req.files.forEach((file) => {
+
+    if (
+      !detailImages.includes(file.fieldname)
+    ) {
+      return;
+    }
+
+    try {
+
+      doc.addPage();
+
+      const imageTitle = file.filename
+        .replace(`_${internnummer}`, "")
+        .replace(/_/g, " ");
+
+      doc
+        .fontSize(18)
+        .font("Helvetica-Bold")
+        .text(
+          imageTitle,
+          {
+            align: "center"
+          }
+        );
+
+      doc.moveDown();
+
+      doc.image(
+        file.path,
+        40,
+        80,
+        {
+          fit: [500, 650],
+          align: "center"
+        }
+      );
+
+    } catch (err) {
+
+      console.error(
+        "❌ Detailbild Fehler:",
+        file.filename,
+        err
+      );
+    }
+  });
+}
     doc.end();
 
     await new Promise((resolve, reject) => {
@@ -483,25 +545,25 @@ doc.image(file.path, pos.x, pos.y, {
 
     console.log("✅ PDF fertig erstellt");
 
-const { error } = await supabase
-  .from("aufnahmen")
-  .insert({
-    internnummer,
-    kunde: meta.kunde,
-    hersteller: meta.hersteller,
-    typ: meta.typ,
-    seriennummer: meta.seriennummer,
-    techniker: technician,
-    bemerkungen: remarks,
-    pdf_name: path.basename(pdfPath)
-  });
+    const { error } = await supabase
+      .from("aufnahmen")
+      .insert({
+        internnummer,
+        kunde: meta.kunde,
+        hersteller: meta.hersteller,
+        typ: meta.typ,
+        seriennummer: meta.seriennummer,
+        techniker: technician,
+        bemerkungen: remarks,
+        pdf_name: path.basename(pdfPath)
+      });
 
-if (error) {
-  console.error(
-    "❌ Supabase Fehler:",
-    error
-  );
-}
+    if (error) {
+      console.error(
+        "❌ Supabase Fehler:",
+        error
+      );
+    }
 
     const pdfBuffer =
       fs.readFileSync(pdfPath);
