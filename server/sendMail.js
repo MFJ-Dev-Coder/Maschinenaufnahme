@@ -424,7 +424,9 @@ doc.image(file.path, pos.x, pos.y, {
   fit: [220, 160],
   align: "center"
 });
-
+console.log("Dateipfad:", file.path);
+console.log("Existiert:", fs.existsSync(file.path));
+      
       const imageTitle = file.filename
         .replace(`_${internnummer}`, "")
         .replace(/_/g, " ");
