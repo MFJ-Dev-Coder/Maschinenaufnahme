@@ -609,6 +609,36 @@ if (req.files?.length) {
   }
   });
 
+
+        app.get(
+  "/api/device/:internnummer",
+  async (req, res) => {
+
+    const { data, error } =
+      await supabase
+        .from("aufnahmen")
+        .select("*")
+        .eq(
+          "internnummer",
+          req.params.internnummer
+        )
+        .order(
+          "erstellt_am",
+          { ascending: false }
+        );
+
+    if (error) {
+      return res
+        .status(500)
+        .json(error);
+    }
+
+    res.json(data);
+
+  }
+);
+
+
 const PORT = process.env.PORT || 3001;
 
 app.use((req, res) => {
