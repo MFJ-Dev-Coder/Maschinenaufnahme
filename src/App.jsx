@@ -5,6 +5,8 @@ import { AuthProvider } from "./context/AuthContext";
 
 import LoginPage from "./pages/LoginPage";
 import SelectionPage from "./pages/SelectionPage";
+import MaschinenHistorieSuche
+  from "./pages/MaschinenHistorieSuche";
 
 const ChecklistPage = lazy(() => import("./pages/ChecklistPage.jsx"));
 
@@ -29,9 +31,13 @@ export default function App() {
 
           {/* Geschützter Bereich */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<SelectionPage />} />
-            <Route path="/checklist/:categoryId" element={<ChecklistPage />} />
-          </Route>
+  <Route path="/" element={<SelectionPage />} />
+  <Route path="/checklist/:categoryId" element={<ChecklistPage />} />
+  <Route
+    path="/historie"
+    element={<MaschinenHistorieSuche />}
+  />
+</Route>
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/login" replace />} />

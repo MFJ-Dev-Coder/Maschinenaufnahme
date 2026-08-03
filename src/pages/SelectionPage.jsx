@@ -1,6 +1,19 @@
 import { Link } from 'react-router-dom';
 import { CHECKLIST_CATEGORIES } from '../config/checklists';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from "react-router-dom";
+
+
+const navigate = useNavigate();
+<button
+  className="selection-card"
+  onClick={() =>
+    navigate("/historie")
+  }
+>
+  Maschinenhistorie
+</button>
+
 
 export default function SelectionPage() {
   const { logout } = useAuth();

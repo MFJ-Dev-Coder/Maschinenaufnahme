@@ -555,7 +555,8 @@ if (req.files?.length) {
         seriennummer: meta.seriennummer,
         techniker: technician,
         bemerkungen: remarks,
-        pdf_name: path.basename(pdfPath)
+        pdf_name: path.basename(pdfPath),
+        pdf_url: pdfUrl
       });
 
     if (error) {
@@ -567,6 +568,30 @@ if (req.files?.length) {
 
     const pdfBuffer =
       fs.readFileSync(pdfPath);
+        const fileName =
+  `checkliste_${internnummer}_${date}.pdf`;
+
+const { error: uploadError } =
+  await supabase.storage
+    .from("pdfs")
+    .upload(
+      fileName,
+      pdfBuffer,
+      {
+        contentType:
+          "application/pdf",
+        upsert: true
+      }
+    );
+
+    const {
+  data: publicUrlData
+} = supabase.storage
+  .from("pdfs")
+  .getPublicUrl(fileName);
+
+const pdfUrl =
+  publicUrlData.publicUrl;
 
     console.log(
       "📧 Sende Mail über Resend..."
@@ -610,28 +635,28 @@ if (req.files?.length) {
   });
 
 
-    app.get("/api/device/:internnummer", async (req, res) => {
+    app.get(
+  "/api/device/:internnummer",
+  async (req, res) => {
 
-  const { data, error } =
-    await supabase
-      .from("aufnahmen")
-      .select("*")
-      .eq(
-        "internnummer",
-        req.params.internnummer
-      )
-      .order(
-        "erstellt_am",
-        { ascending: false }
-      );
+    const { data } =
+      await supabase
+        .from("aufnahmen")
+        .select("*")
+        .eq(
+          "internnummer",
+          req.params.internnummer
+        )
+        .order(
+          "erstellt_am",
+          {
+            ascending: false
+          }
+        );
 
-  if (error) {
-    return res.status(500).json(error);
+    res.json(data);
   }
-
-  res.json(data);
-
-});
+);
 
 
 const PORT = process.env.PORT || 3001;
