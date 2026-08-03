@@ -14,12 +14,21 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+console.log("SUPABASE_URL =", process.env.SUPABASE_URL);
+console.log(
+  "SUPABASE_ANON_KEY vorhanden =",
+  !!process.env.SUPABASE_ANON_KEY
+);
+
+const resend = new Resend(
+  process.env.RESEND_API_KEY
+);
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
+
 
 const app = express();
 
@@ -463,6 +472,26 @@ doc.image(file.path, pos.x, pos.y, {
     });
 
     console.log("✅ PDF fertig erstellt");
+
+const { error } = await supabase
+  .from("aufnahmen")
+  .insert({
+    internnummer,
+    kunde: meta.kunde,
+    hersteller: meta.hersteller,
+    typ: meta.typ,
+    seriennummer: meta.seriennummer,
+    techniker,
+    bemerkungen: remarks,
+    pdf_name: path.basename(pdfPath)
+  });
+
+if (error) {
+  console.error(
+    "❌ Supabase Fehler:",
+    error
+  );
+}
 
     const pdfBuffer =
       fs.readFileSync(pdfPath);
