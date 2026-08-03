@@ -491,7 +491,7 @@ const { error } = await supabase
     hersteller: meta.hersteller,
     typ: meta.typ,
     seriennummer: meta.seriennummer,
-    techniker,
+    techniker: technician,
     bemerkungen: remarks,
     pdf_name: path.basename(pdfPath)
   });
