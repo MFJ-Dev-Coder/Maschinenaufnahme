@@ -615,7 +615,19 @@ if (req.files?.length) {
   const { data, error } =
     await supabase
       .from("aufnahmen")
-      .select("*");
+      .select("*")
+      .eq(
+        "internnummer",
+        req.params.internnummer
+      )
+      .order(
+        "erstellt_am",
+        { ascending: false }
+      );
+
+  if (error) {
+    return res.status(500).json(error);
+  }
 
   res.json(data);
 
