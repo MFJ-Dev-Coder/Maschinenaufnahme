@@ -32,6 +32,12 @@ const supabase = createClient(
 
 const app = express();
 
+    if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads", {
+    recursive: true
+  });
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -76,7 +82,7 @@ app.use(
 app.post("/sendMail", upload.any(), async (req, res) => {
   try {
     console.log("✅ SERVER LÄUFT (RESEND MODE)");
-
+    console.log("FILES:", req.files);
     const data = JSON.parse(req.body.data);
 
     const {
@@ -443,11 +449,12 @@ doc.image(file.path, pos.x, pos.y, {
       );
 
     } catch (err) {
-      console.log(
-        "⚠️ Bild konnte nicht geladen werden:",
-        file.filename
-      );
-    }
+  console.error(
+    "⚠️ Bildfehler:",
+    file.filename,
+    err
+  );
+}
 
     if (
       (index + 1) % 4 === 0 &&
