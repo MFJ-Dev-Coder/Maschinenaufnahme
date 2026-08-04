@@ -36,7 +36,18 @@ return (
       </button>
 
     </div>
+                <input
+  type="text"
+  value={search}
+  onChange={(e) =>
+    setSearch(e.target.value)
+  }
+  placeholder="Internnummer eingeben"
+/>
 
+<button onClick={sucheMaschine}>
+  Suchen
+</button>
     {results.map((item) => (
 
       <div
