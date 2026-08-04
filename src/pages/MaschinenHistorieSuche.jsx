@@ -51,37 +51,42 @@ return (
     {results.map((item) => (
 
       <div
-        key={item.id}
-        className="card"
-      >
-        <h2>
-          {item.hersteller} {item.typ}
-        </h2>
+  key={item.id}
+  className="card"
+>
 
-        <p>
-          Internnummer: {item.internnummer}
-        </p>
+  <h2>
+    {item.hersteller} {item.typ}
+  </h2>
 
-        <p>
-          Seriennummer: {item.seriennummer}
-        </p>
+  <p>
+    Internnummer: {item.internnummer}
+  </p>
 
-        <p>
-          Kunde: {item.kunde}
-        </p>
+  <p>
+    Seriennummer: {item.seriennummer}
+  </p>
 
-        <p>
-          Techniker: {item.techniker}
-        </p>
+  <p>
+    Kunde: {item.kunde}
+  </p>
 
-        <p>
-          Datum: {
-            new Date(
-              item.erstellt_am
-            ).toLocaleDateString("de-DE")
-          }
-        </p>
-      </div>
+  <p>
+    Techniker: {item.techniker}
+  </p>
+
+  {item.pdf_url && (
+    <a
+      href={item.pdf_url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="button button--ghost"
+    >
+      PDF herunterladen
+    </a>
+  )}
+
+</div>
 
     ))}
 

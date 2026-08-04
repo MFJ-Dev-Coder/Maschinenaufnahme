@@ -544,31 +544,16 @@ if (req.files?.length) {
     });
 
     console.log("✅ PDF fertig erstellt");
+console.log("✅ PDF fertig erstellt");
 
-    const { error } = await supabase
-      .from("aufnahmen")
-      .insert({
-        internnummer,
-        kunde: meta.kunde,
-        hersteller: meta.hersteller,
-        typ: meta.typ,
-        seriennummer: meta.seriennummer,
-        techniker: technician,
-        bemerkungen: remarks,
-        pdf_name: path.basename(pdfPath),
-        pdf_url: pdfUrl
-      });
+const pdfBuffer =
+  fs.readFileSync(pdfPath);
 
-    if (error) {
-      console.error(
-        "❌ Supabase Fehler:",
-        error
-      );
-    }
+// ==============================
+// PDF in Supabase Storage speichern
+// ==============================
 
-    const pdfBuffer =
-      fs.readFileSync(pdfPath);
-        const fileName =
+const fileName =
   `checkliste_${internnummer}_${date}.pdf`;
 
 const { error: uploadError } =
@@ -578,13 +563,19 @@ const { error: uploadError } =
       fileName,
       pdfBuffer,
       {
-        contentType:
-          "application/pdf",
+        contentType: "application/pdf",
         upsert: true
       }
     );
 
-    const {
+if (uploadError) {
+  console.error(
+    "❌ PDF Upload Fehler:",
+    uploadError
+  );
+}
+
+const {
   data: publicUrlData
 } = supabase.storage
   .from("pdfs")
@@ -592,6 +583,31 @@ const { error: uploadError } =
 
 const pdfUrl =
   publicUrlData.publicUrl;
+
+// ==============================
+// Datensatz speichern
+// ==============================
+
+const { error } = await supabase
+  .from("aufnahmen")
+  .insert({
+    internnummer,
+    kunde: meta.kunde,
+    hersteller: meta.hersteller,
+    typ: meta.typ,
+    seriennummer: meta.seriennummer,
+    techniker: technician,
+    bemerkungen: remarks,
+    pdf_name: path.basename(pdfPath),
+    pdf_url: pdfUrl
+  });
+
+if (error) {
+  console.error(
+    "❌ Supabase Fehler:",
+    error
+  );
+}
 
     console.log(
       "📧 Sende Mail über Resend..."
