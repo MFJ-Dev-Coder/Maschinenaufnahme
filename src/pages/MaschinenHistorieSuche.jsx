@@ -77,13 +77,13 @@ return (
 
   {item.pdf_url && (
     <a
-      href={item.pdf_url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="button button--ghost"
-    >
-      PDF herunterladen
-    </a>
+  href={item.pdf_url}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="button button--ghost pdf-download-button"
+>
+  📄 PDF herunterladen
+</a>
   )}
 
 </div>

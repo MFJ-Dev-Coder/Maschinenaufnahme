@@ -592,3 +592,8 @@ textarea {
   color: white;
   border-color: white;
 }
+
+.pdf-download-button {
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
