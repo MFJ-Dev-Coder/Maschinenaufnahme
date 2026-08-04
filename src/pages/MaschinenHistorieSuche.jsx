@@ -20,7 +20,6 @@ return (
   <div className="page">
 
     <div className="header">
-
       <div>
         <h1>Maschinenhistorie</h1>
         <p className="subtitle">
@@ -29,32 +28,32 @@ return (
       </div>
 
       <button
-        className="button button--ghost"
-        onClick={() => navigate("/")}
-      >
-        Zurück
-      </button>
-
-    </div>
-                <input
-  type="text"
-  value={search}
-  onChange={(e) =>
-    setSearch(e.target.value)
-  }
-  placeholder="Internnummer eingeben"
-/>
-
-<button onClick={sucheMaschine}>
-  Suchen
+  className="button button--ghost history-back-button"
+  onClick={() => navigate("/")}
+>
+  ← Zurück
 </button>
+    </div>
+
+    <input
+      type="text"
+      value={search}
+      onChange={(e) =>
+        setSearch(e.target.value)
+      }
+      placeholder="Internnummer eingeben"
+    />
+
+    <button onClick={sucheMaschine}>
+      Suchen
+    </button>
+
     {results.map((item) => (
 
       <div
         key={item.id}
         className="card"
       >
-
         <h2>
           {item.hersteller} {item.typ}
         </h2>
@@ -82,7 +81,6 @@ return (
             ).toLocaleDateString("de-DE")
           }
         </p>
-
       </div>
 
     ))}

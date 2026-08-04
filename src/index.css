@@ -277,7 +277,7 @@ textarea {
   color: #e3000f;
   font-weight: 600;
 }
-``
+
 
 .back-link {
   display: inline-block;
@@ -585,4 +585,10 @@ textarea {
 .user-info strong {
   color: #e3000f;
   font-size: 1rem;
+}
+
+
+.button--ghost {
+  color: white;
+  border-color: white;
 }
