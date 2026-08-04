@@ -27,6 +27,11 @@ const USERS = [
     username: "tamara",
     password: "tami1234",
     name: "Tamara Bühler"
+  },
+  {
+    username: "paul",
+    password: "Paul2026",
+    name: "Paul Nichter"
   }
 ];
 
