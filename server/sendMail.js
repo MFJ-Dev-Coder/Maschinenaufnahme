@@ -674,6 +674,27 @@ if (error) {
   }
 );
 
+app.get(
+  "/api/devices",
+  async (req, res) => {
+
+    const { data, error } =
+      await supabase
+        .from("aufnahmen")
+        .select("*")
+        .order(
+          "internnummer",
+          { ascending: true }
+        );
+
+    if (error) {
+      return res.status(500).json(error);
+    }
+
+    res.json(data);
+  }
+);
+
 
 const PORT = process.env.PORT || 3001;
 
