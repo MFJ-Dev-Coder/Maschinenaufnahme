@@ -1,20 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 export default function MaschinenHistorieSuche() {
 
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);   
   const navigate = useNavigate();
-  const sucheMaschine = async () => {
 
-    const response = await fetch(
-      `/api/device/${search}`
-    );
+  const sucheMaschine = async (
+  internnummer = search
+) => {
 
-    const data = await response.json();
+  const response = await fetch(
+    `/api/device/${internnummer}`
+  );
 
-    setResults(data);
-  };
+  const data = await response.json();
+
+  setResults(data);
+};
+
+useEffect(() => {
+
+  fetch("/api/devices")
+    .then((res) => res.json())
+    .then((data) => setResults(data));
+
+}, []);
 
 return (
   <div className="page">
@@ -48,48 +59,43 @@ return (
       Suchen
     </button>
 
-    {results.map((item) => (
+<table className="history-table">
 
-      <div
-  key={item.id}
-  className="card"
->
+  <thead>
+    <tr>
+      <th>Internnummer</th>
+      <th>Hersteller</th>
+      <th>Typ</th>
+    </tr>
+  </thead>
 
-  <h2>
-    {item.hersteller} {item.typ}
-  </h2>
+  <tbody>
 
-  <p>
-    Internnummer: {item.internnummer}
-  </p>
+    {results
+      .filter((item) =>
+        item.internnummer
+          ?.toString()
+          .includes(search)
+      )
+      .map((item) => (
 
-  <p>
-    Seriennummer: {item.seriennummer}
-  </p>
+        <tr
+          key={item.id}
+          style={{ cursor: "pointer" }}
+          onClick={() =>
+            sucheMaschine(item.internnummer)
+          }
+        >
+          <td>{item.internnummer}</td>
+          <td>{item.hersteller}</td>
+          <td>{item.typ}</td>
+        </tr>
 
-  <p>
-    Kunde: {item.kunde}
-  </p>
+      ))}
 
-  <p>
-    Techniker: {item.techniker}
-  </p>
+  </tbody>
 
-  {item.pdf_url && (
-    <a
-  href={item.pdf_url}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="button button--ghost pdf-download-button"
->
-  📄 PDF herunterladen
-</a>
-  )}
-
-</div>
-
-    ))}
-
+</table>
   </div>
 );
 }
