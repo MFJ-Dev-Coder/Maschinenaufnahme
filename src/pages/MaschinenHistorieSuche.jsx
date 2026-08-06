@@ -1,101 +1,151 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-export default function MaschinenHistorieSuche() {
 
+export default function MaschinenHistorieSuche() {
   const [search, setSearch] = useState("");
-  const [results, setResults] = useState([]);   
+  const [results, setResults] = useState([]);
+  const [selectedEntry, setSelectedEntry] = useState(null);
+
   const navigate = useNavigate();
 
-  const sucheMaschine = async (
-  internnummer = search
-) => {
+  useEffect(() => {
+    fetch("/api/devices")
+      .then((res) => res.json())
+      .then((data) => setResults(data))
+      .catch((err) =>
+        console.error("Fehler beim Laden:", err)
+      );
+  }, []);
 
-  const response = await fetch(
-    `/api/device/${internnummer}`
+  const filteredResults = results.filter(
+    (entry) =>
+      entry.internnummer
+        ?.toLowerCase()
+        .includes(search.toLowerCase()) ||
+      entry.typ
+        ?.toLowerCase()
+        .includes(search.toLowerCase())
   );
 
-  const data = await response.json();
+  return (
+    <div className="page">
+      <div className="header">
+        <div>
+          <h1>Maschinenhistorie</h1>
+          <p className="subtitle">
+            Historische Arbeitskarten anzeigen
+          </p>
+        </div>
 
-  setResults(data);
-};
-
-useEffect(() => {
-
-  fetch("/api/devices")
-    .then((res) => res.json())
-    .then((data) => setResults(data));
-
-}, []);
-
-return (
-  <div className="page">
-
-    <div className="header">
-      <div>
-        <h1>Maschinenhistorie</h1>
-        <p className="subtitle">
-          Suche nach vorhandenen Aufnahmen
-        </p>
+        <button
+          className="button button--ghost"
+          onClick={() => navigate("/")}
+        >
+          ← Zurück
+        </button>
       </div>
 
-      <button
-  className="button button--ghost history-back-button"
-  onClick={() => navigate("/")}
->
-  ← Zurück
-</button>
-    </div>
-
-    <input
-      type="text"
-      value={search}
-      onChange={(e) =>
-        setSearch(e.target.value)
-      }
-      placeholder="Internnummer eingeben"
-    />
-
-    <button onClick={sucheMaschine}>
-      Suchen
-    </button>
-
-<table className="history-table">
-
-  <thead>
-    <tr>
-      <th>Internnummer</th>
-      <th>Hersteller</th>
-      <th>Typ</th>
-    </tr>
-  </thead>
-
-  <tbody>
-
-    {results
-      .filter((item) =>
-        item.internnummer
-          ?.toString()
-          .includes(search)
-      )
-      .map((item) => (
-
-        <tr
-          key={item.id}
-          style={{ cursor: "pointer" }}
-          onClick={() =>
-            sucheMaschine(item.internnummer)
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Internnummer oder Typ suchen..."
+          value={search}
+          onChange={(e) =>
+            setSearch(e.target.value)
           }
-        >
-          <td>{item.internnummer}</td>
-          <td>{item.hersteller}</td>
-          <td>{item.typ}</td>
-        </tr>
+        />
+      </div>
 
-      ))}
+      <div className="table-container">
+        <table className="history-table">
+          <thead>
+            <tr>
+              <th>Internnummer</th>
+              <th>Typ</th>
+              <th>Erstellungsdatum</th>
+            </tr>
+          </thead>
 
-  </tbody>
+          <tbody>
+            {filteredResults
+              .sort(
+                (a, b) =>
+                  new Date(b.erstellt_am) -
+                  new Date(a.erstellt_am)
+              )
+              .map((entry) => (
+                <tr
+                  key={entry.id}
+                  onClick={() =>
+                    setSelectedEntry(entry)
+                  }
+                >
+                  <td>{entry.internnummer}</td>
 
-</table>
-  </div>
-);
+                  <td>{entry.typ}</td>
+
+                  <td>
+                    {new Date(
+                      entry.erstellt_am
+                    ).toLocaleDateString("de-DE")}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+
+      {selectedEntry && (
+        <div className="arbeitskarte">
+          <h2>Arbeitskarte</h2>
+
+          <div className="info-grid">
+            <div>
+              <strong>Auftrag</strong>
+              <p>
+                {selectedEntry.auftrag ||
+                  "Keine Angabe"}
+              </p>
+            </div>
+
+            <div>
+              <strong>Techniker</strong>
+              <p>
+                {selectedEntry.techniker ||
+                  "Keine Angabe"}
+              </p>
+            </div>
+
+            <div>
+              <strong>Datum</strong>
+              <p>
+                {new Date(
+                  selectedEntry.erstellt_am
+                ).toLocaleDateString("de-DE")}
+              </p>
+            </div>
+
+            <div>
+              <strong>Seriennummer</strong>
+              <p>
+                {selectedEntry.seriennummer ||
+                  "Keine Angabe"}
+              </p>
+            </div>
+          </div>
+
+          {selectedEntry.pdf_url && (
+            <a
+              href={selectedEntry.pdf_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button button--ghost"
+            >
+              📄 PDF herunterladen
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
