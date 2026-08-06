@@ -19,11 +19,11 @@ export default function MaschinenHistorieSuche() {
 
   const filteredResults = results.filter(
     (entry) =>
-      entry.internnummer
-        ?.toLowerCase()
+      (entry.internnummer || "")
+        .toLowerCase()
         .includes(search.toLowerCase()) ||
-      entry.typ
-        ?.toLowerCase()
+      (entry.typ || "")
+        .toLowerCase()
         .includes(search.toLowerCase())
   );
 
@@ -41,7 +41,7 @@ export default function MaschinenHistorieSuche() {
           className="button button--ghost"
           onClick={() => navigate("/")}
         >
-          ← Zurück
+          Zurück
         </button>
       </div>
 
@@ -67,84 +67,77 @@ export default function MaschinenHistorieSuche() {
           </thead>
 
           <tbody>
-            {filteredResults
-              .sort(
-                (a, b) =>
-                  new Date(b.erstellt_am) -
-                  new Date(a.erstellt_am)
-              )
-              .map((entry) => (
-                <tr
-                  key={entry.id}
-                  onClick={() =>
-                    setSelectedEntry(entry)
-                  }
-                >
-                  <td>{entry.internnummer}</td>
-
-                  <td>{entry.typ}</td>
-
-                  <td>
-                    {new Date(
-                      entry.erstellt_am
-                    ).toLocaleDateString("de-DE")}
-                  </td>
-                </tr>
-              ))}
+            {filteredResults.map((entry) => (
+              <tr
+                key={entry.id}
+                onClick={() => setSelectedEntry(entry)}
+                className="history-row"
+              >
+                <td>{entry.internnummer}</td>
+                <td>{entry.typ}</td>
+                <td>
+                  {new Date(entry.erstellt_am).toLocaleDateString("de-DE")}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
       {selectedEntry && (
-        <div className="arbeitskarte">
-          <h2>Arbeitskarte</h2>
-
-          <div className="info-grid">
-            <div>
-              <strong>Auftrag</strong>
-              <p>
-                {selectedEntry.auftrag ||
-                  "Keine Angabe"}
-              </p>
-            </div>
-
-            <div>
-              <strong>Techniker</strong>
-              <p>
-                {selectedEntry.techniker ||
-                  "Keine Angabe"}
-              </p>
-            </div>
-
-            <div>
-              <strong>Datum</strong>
-              <p>
-                {new Date(
-                  selectedEntry.erstellt_am
-                ).toLocaleDateString("de-DE")}
-              </p>
-            </div>
-
-            <div>
-              <strong>Seriennummer</strong>
-              <p>
-                {selectedEntry.seriennummer ||
-                  "Keine Angabe"}
-              </p>
-            </div>
-          </div>
-
-          {selectedEntry.pdf_url && (
-            <a
-              href={selectedEntry.pdf_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button button--ghost"
+        <div
+          className="modal-overlay"
+          onClick={() => setSelectedEntry(null)}
+        >
+          <div
+            className="modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="close-button"
+              onClick={() => setSelectedEntry(null)}
             >
-              📄 PDF herunterladen
-            </a>
-          )}
-        </div>
+              ✕
+            </button>
+
+            <h2>Arbeitskarte</h2>
+
+            <div className="info-grid">
+              <div>
+                <strong>Auftrag</strong>
+                <p>{selectedEntry.auftrag || "Keine Angabe"}</p>
+              </div>
+
+              <div>
+                <strong>Techniker</strong>
+                <p>{selectedEntry.techniker || "Keine Angabe"}</p>
+              </div>
+
+              <div>
+                <strong>Datum</strong>
+                <p>
+                  {new Date(selectedEntry.erstellt_am).toLocaleDateString("de-DE")}
+                </p>
+              </div>
+
+              <div>
+                <strong>Seriennummer</strong>
+                <p>{selectedEntry.seriennummer || "Keine Angabe"}</p>
+              </div>
+            </div>
+
+            {selectedEntry.pdf_url && (
+              <a
+                href={selectedEntry.pdf_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button--ghost"
+              >
+                📄 PDF herunterladen
+              </a>
+            )}
+          </div>
+                </div>
       )}
     </div>
   );
