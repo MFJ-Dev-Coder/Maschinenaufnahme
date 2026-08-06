@@ -597,3 +597,26 @@ textarea {
   color: #000000 !important;
   border-color: #000000 !important;
 }
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  color: black;
+}
+
+.history-table th,
+.history-table td {
+  border: 1px solid #ccc;
+  padding: 12px;
+}
+
+.history-table th {
+  background: #e3000f;
+  color: white;
+}
+
+.history-table tr:hover {
+  background: #eeeeee;
+}
