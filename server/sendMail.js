@@ -93,6 +93,13 @@ app.post("/sendMail", upload.any(), async (req, res) => {
       signatures
     } = data;
 
+      console.log("META DATEN:");
+      console.log(meta);
+
+      console.log("ARBEITSAUFTRAG:");
+      console.log(meta.arbeitsauftrag);
+
+
     const internnummer =
       meta?.internnummer || "unknown";
 
@@ -593,6 +600,7 @@ const { error } = await supabase
   .insert({
     internnummer,
     kunde: meta.kunde,
+    arbeitsauftrag: meta.arbeitsauftrag,
     hersteller: meta.hersteller,
     typ: meta.typ,
     seriennummer: meta.seriennummer,
