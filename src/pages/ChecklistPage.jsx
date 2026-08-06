@@ -95,7 +95,7 @@ const checkMachineExists = async (
  const updateMeta = (id, value) => {
   setMeta((prev) => ({
     ...prev,
-    value
+    [id]: value
   }));
 };
 
