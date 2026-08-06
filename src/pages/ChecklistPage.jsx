@@ -723,34 +723,52 @@ return (
       </p>
 
       <div className="popup-buttons">
-        <button
-          onClick={() => {
-            setMeta((prev) => ({
-              ...prev,
-              internnummer:
-                existingMachine.internnummer || "",
-              hersteller:
-                existingMachine.hersteller || "",
-              typ:
-                existingMachine.typ || "",
-              seriennummer:
-                existingMachine.seriennummer || "",
-              arbeitsauftrag:
-                existingMachine.arbeitsauftrag || ""
-            }));
 
-            setExistingMachine(null);
-          }}
-        >
-          Daten übernehmen
-        </button>
+  {existingMachine.pdf_url && (
+    <button
+      type="button"
+      onClick={() =>
+        window.open(
+          existingMachine.pdf_url,
+          "_blank"
+        )
+      }
+    >
+      📄 PDF öffnen
+    </button>
+  )}
 
-        <button
-          onClick={() => setExistingMachine(null)}
-        >
-          Neue Aufnahme
-        </button>
-      </div>
+  <button
+    onClick={() => {
+      setMeta((prev) => ({
+        ...prev,
+        internnummer:
+          existingMachine.internnummer || "",
+        hersteller:
+          existingMachine.hersteller || "",
+        typ:
+          existingMachine.typ || "",
+        seriennummer:
+          existingMachine.seriennummer || "",
+        arbeitsauftrag:
+          existingMachine.arbeitsauftrag || ""
+      }));
+
+      setExistingMachine(null);
+    }}
+  >
+    Daten übernehmen
+  </button>
+
+  <button
+    onClick={() =>
+      setExistingMachine(null)
+    }
+  >
+    Neue Aufnahme
+  </button>
+
+</div>
     </div>
   </div>
 )}
