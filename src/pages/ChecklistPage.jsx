@@ -636,56 +636,71 @@ return (
      {renderMetaFields()}
 
 {existingMachine && (
-  <div className="existing-machine-popup">
-    <h3>
-      ⚠️ Maschine bereits vorhanden
-    </h3>
-
-    <p>
-      Internnummer: {existingMachine.internnummer}
-    </p>
-
-    <p>
-      Hersteller: {existingMachine.hersteller}
-    </p>
-
-    <p>
-      Typ: {existingMachine.typ}
-    </p>
-
-    <p>
-      Seriennummer: {existingMachine.seriennummer}
-    </p>
-
-    <button
-      onClick={() => {
-        setMeta((prev) => ({
-  ...prev,
-  internnummer:
-    existingMachine.internnummer || "",
-  hersteller:
-    existingMachine.hersteller || "",
-  typ:
-    existingMachine.typ || "",
-  seriennummer:
-    existingMachine.seriennummer || "",
-  arbeitsauftrag:
-    existingMachine.arbeitsauftrag || ""
-}));
-
-        setExistingMachine(null);
-      }}
+  <div
+    className="modal-overlay"
+    onClick={() => setExistingMachine(null)}
+  >
+    <div
+      className="modal"
+      onClick={(e) => e.stopPropagation()}
     >
-      Daten übernehmen
-    </button>
+      <h2>⚠️ Maschine bereits vorhanden</h2>
 
-    <button
-      onClick={() =>
-        setExistingMachine(null)
-      }
-    >
-      Neue Aufnahme
-    </button>
+      <p>
+        <strong>Internnummer:</strong>{" "}
+        {existingMachine.internnummer}
+      </p>
+
+      <p>
+        <strong>Hersteller:</strong>{" "}
+        {existingMachine.hersteller}
+      </p>
+
+      <p>
+        <strong>Typ:</strong>{" "}
+        {existingMachine.typ}
+      </p>
+
+      <p>
+        <strong>Seriennummer:</strong>{" "}
+        {existingMachine.seriennummer}
+      </p>
+
+      <p>
+        <strong>Arbeitsauftrag:</strong>{" "}
+        {existingMachine.arbeitsauftrag}
+      </p>
+
+      <div className="popup-buttons">
+        <button
+          onClick={() => {
+            setMeta((prev) => ({
+              ...prev,
+              internnummer:
+                existingMachine.internnummer || "",
+              hersteller:
+                existingMachine.hersteller || "",
+              typ:
+                existingMachine.typ || "",
+              seriennummer:
+                existingMachine.seriennummer || "",
+              arbeitsauftrag:
+                existingMachine.arbeitsauftrag || ""
+            }));
+
+            setExistingMachine(null);
+          }}
+        >
+          Daten übernehmen
+        </button>
+
+        <button
+          onClick={() => setExistingMachine(null)}
+        >
+          Neue Aufnahme
+        </button>
+      </div>
+    </div>
   </div>
 )}
 
