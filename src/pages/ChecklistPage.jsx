@@ -246,14 +246,65 @@ sections.forEach(section => {
   });
 });
     
-    const requiredImages = [
+   const typenOhneMast = [
+  // Linde Niederhubwagen
+  "MT",
+  "T",
+  "D06",
+  "D08",
+  "D10",
+  "D12",
+  "D12HP",
+  "D14",
+  "D14AP",
+  "D14HP",
+
+  // Still Niederhubwagen
+  "EXH",
+  "FXH",
+  "EXH-L",
+  "EXH-S",
+  "EXH-SF",
+
+  // Still Doppelstock
+  "EXD",
+  "SXD20",
+
+  // Jungheinrich Niederhubwagen
+  "AME",
+  "EJE",
+  "EJEC",
+
+  // Jungheinrich Doppelstock
+  "EJD",
+  "ECD320",
+
+  // Yale
+  "MPC",
+  "MP",
+
+  // Heli
+  "CBD",
+
+  // Hangcha
+  "CBD"
+];
+
+const hatKeinenMast = typenOhneMast.some(
+  prefix => meta.typ?.startsWith(prefix)
+);
+
+const requiredImages = [
   "Typenschild",
-  "Mastnummer",
   "Motornummer",
-  "Mastansicht",
   "Reifen vorne",
   "Reifen hinten"
 ];
+
+if (!hatKeinenMast) {
+  requiredImages.push("Mastnummer");
+  requiredImages.push("Mastansicht");
+}
     
 dynamicImageFields.forEach(field => {
   requiredImages.push(field);
