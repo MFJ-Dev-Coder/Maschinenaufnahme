@@ -93,28 +93,27 @@ const checkMachineExists = async (
 
   // ✅ UPDATE
  const updateMeta = (id, value) => {
-  setMeta(prev => ({
+  setMeta((prev) => ({
     ...prev,
     value
   }));
 };
 
-  const updateSectionStatus = (sectionIndex, itemIndex, status) => {
-    setSections(prev =>
-      prev.map((section, sIdx) => {
-        if (sIdx !== sectionIndex) return section;
+  function updateSectionStatus(sectionIndex, itemIndex, status) {
+    setSections(prev => prev.map((section, sIdx) => {
+      if (sIdx !== sectionIndex) return section;
 
-        return {
-          ...section,
-          items: section.items.map((item, iIdx) => {
-            if (iIdx !== itemIndex) return item;
-            const newStatus = item.status === status ? null : status;
-            return { ...item, status: newStatus };
-          })
-        };
-      })
+      return {
+        ...section,
+        items: section.items.map((item, iIdx) => {
+          if (iIdx !== itemIndex) return item;
+          const newStatus = item.status === status ? null : status;
+          return { ...item, status: newStatus };
+        })
+      };
+    })
     );
-  };
+  }
 const updateMeasurementValue = (
   sectionIndex,
   itemIndex,
@@ -661,16 +660,18 @@ return (
     <button
       onClick={() => {
         setMeta((prev) => ({
-          ...prev,
-          hersteller:
-            existingMachine.hersteller || "",
-          typ:
-            existingMachine.typ || "",
-          seriennummer:
-            existingMachine.seriennummer || "",
-          arbeitsauftrag:
-            existingMachine.arbeitsauftrag || ""
-        }));
+  ...prev,
+  internnummer:
+    existingMachine.internnummer || "",
+  hersteller:
+    existingMachine.hersteller || "",
+  typ:
+    existingMachine.typ || "",
+  seriennummer:
+    existingMachine.seriennummer || "",
+  arbeitsauftrag:
+    existingMachine.arbeitsauftrag || ""
+}));
 
         setExistingMachine(null);
       }}
