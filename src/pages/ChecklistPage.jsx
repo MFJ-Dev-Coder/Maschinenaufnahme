@@ -4,9 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { CHECKLIST_CATEGORIES } from "../config/checklists.js";
 import SignatureCanvas from "react-signature-canvas";
 
+
+
 export default function ChecklistPage() {
   const { categoryId } = useParams();
-
+const [existingMachine, setExistingMachine] =
+  useState(null);
 const selectedCategory =
   CHECKLIST_CATEGORIES[categoryId];
   useEffect(() => {
@@ -29,6 +32,29 @@ const selectedCategory =
   const technician =
   sessionStorage.getItem("technician");
   
+const checkMachineExists = async (
+  internnummer
+) => {
+  if (!internnummer) return;
+
+  try {
+    const response = await fetch(
+      `/api/device/${internnummer}`
+    );
+
+    const data = await response.json();
+
+    if (data.length > 0) {
+      setExistingMachine(data[0]);
+    } else {
+      setExistingMachine(null);
+    }
+    } catch (err) {
+      console.error(err);
+        }
+          };
+  
+
   
   // ✅ META
   const [meta, setMeta] = useState(
@@ -66,9 +92,12 @@ const selectedCategory =
   const technicianSignatureRef = useRef(null);
 
   // ✅ UPDATE
-  const updateMeta = (id, value) => {
-    setMeta(prev => ({ ...prev, [id]: value }));
-  };
+ const updateMeta = (id, value) => {
+  setMeta(prev => ({
+    ...prev,
+    value
+  }));
+};
 
   const updateSectionStatus = (sectionIndex, itemIndex, status) => {
     setSections(prev =>
@@ -385,10 +414,19 @@ if (
   </select>
 ) : (
   <input
-    type="text"
-    value={meta[field.id] || ""}
-    onChange={e => updateMeta(field.id, e.target.value)}
-  />
+  type="text"
+  value={meta[field.id] || ""}
+  onChange={e =>
+    updateMeta(field.id, e.target.value)
+  }
+  onBlur={() => {
+    if (field.id === "internnummer") {
+      checkMachineExists(
+        meta.internnummer
+      );
+    }
+  }}
+/>
 )}
           </label>
         ))}
@@ -596,11 +634,65 @@ return (
         ← Zurück zum Menü
       </Link>
 
-      {renderMetaFields()}
-      {renderSections()}
-      {renderRemarks()}
-      {renderSignatures()}
-      {renderImages()}
+     {renderMetaFields()}
+
+{existingMachine && (
+  <div className="existing-machine-popup">
+    <h3>
+      ⚠️ Maschine bereits vorhanden
+    </h3>
+
+    <p>
+      Internnummer: {existingMachine.internnummer}
+    </p>
+
+    <p>
+      Hersteller: {existingMachine.hersteller}
+    </p>
+
+    <p>
+      Typ: {existingMachine.typ}
+    </p>
+
+    <p>
+      Seriennummer: {existingMachine.seriennummer}
+    </p>
+
+    <button
+      onClick={() => {
+        setMeta((prev) => ({
+          ...prev,
+          hersteller:
+            existingMachine.hersteller || "",
+          typ:
+            existingMachine.typ || "",
+          seriennummer:
+            existingMachine.seriennummer || "",
+          arbeitsauftrag:
+            existingMachine.arbeitsauftrag || ""
+        }));
+
+        setExistingMachine(null);
+      }}
+    >
+      Daten übernehmen
+    </button>
+
+    <button
+      onClick={() =>
+        setExistingMachine(null)
+      }
+    >
+      Neue Aufnahme
+    </button>
+  </div>
+)}
+
+{renderSections()}
+{renderRemarks()}
+{renderSignatures()}
+{renderImages()}
+
 
       <section className="card card--actions">
        <button
