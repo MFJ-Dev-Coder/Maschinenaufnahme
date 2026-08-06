@@ -620,3 +620,44 @@ textarea {
 .history-table tr:hover {
   background: #eeeeee;
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+.modal {
+  background: white;
+  color: black;
+  padding: 24px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90%;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.history-row {
+  cursor: pointer;
+}
+
+.history-row:hover {
+  background: #f0f0f0;
+}

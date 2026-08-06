@@ -33,7 +33,7 @@ export default function MaschinenHistorieSuche() {
         <div>
           <h1>Maschinenhistorie</h1>
           <p className="subtitle">
-            Historische Arbeitskarten anzeigen
+            Historische Maschinenkarten anzeigen
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export default function MaschinenHistorieSuche() {
               ✕
             </button>
 
-            <h2>Arbeitskarte</h2>
+            <h2>Maschinenkarte</h2>
 
             <div className="info-grid">
               <div>
