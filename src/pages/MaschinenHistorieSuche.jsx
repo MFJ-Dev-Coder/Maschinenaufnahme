@@ -105,7 +105,7 @@ export default function MaschinenHistorieSuche() {
             <div className="info-grid">
               <div>
                 <strong>Auftrag</strong>
-                <p>{selectedEntry.auftrag || "Keine Angabe"}</p>
+                <p>{selectedEntry.arbeitsauftrag || "Keine Angabe"}</p>
               </div>
 
               <div>
