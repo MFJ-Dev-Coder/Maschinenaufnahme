@@ -8,8 +8,16 @@ import SignatureCanvas from "react-signature-canvas";
 
 export default function ChecklistPage() {
   const { categoryId } = useParams();
+
+
+
 const [existingMachine, setExistingMachine] =
   useState(null);
+  const [machineHistory, setMachineHistory] =
+  useState([]);
+
+
+
 const selectedCategory =
   CHECKLIST_CATEGORIES[categoryId];
   useEffect(() => {
@@ -44,11 +52,13 @@ const checkMachineExists = async (
 
     const data = await response.json();
 
-    if (data.length > 0) {
-      setExistingMachine(data[0]);
-    } else {
-      setExistingMachine(null);
-    }
+   if (data.length > 0) {
+  setExistingMachine(data[0]);
+  setMachineHistory(data);
+} else {
+  setExistingMachine(null);
+  setMachineHistory([]);
+}
     } catch (err) {
       console.error(err);
         }
@@ -721,7 +731,40 @@ return (
         <strong>Arbeitsauftrag:</strong>{" "}
         {existingMachine.arbeitsauftrag}
       </p>
+          <hr />
 
+<h3>Vorherige Aufnahmen</h3>
+
+{machineHistory.map((entry) => (
+  <div
+    key={entry.id}
+    style={{
+      padding: "8px 0",
+      borderBottom: "1px solid #ddd"
+    }}
+  >
+    <p>
+      <strong>Datum:</strong>{" "}
+      {new Date(
+        entry.erstellt_am
+      ).toLocaleDateString("de-DE")}
+    </p>
+
+    {entry.pdf_url && (
+      <button
+        type="button"
+        onClick={() =>
+          window.open(
+            entry.pdf_url,
+            "_blank"
+          )
+        }
+      >
+        📄 PDF öffnen
+      </button>
+    )}
+  </div>
+))}
       <div className="popup-buttons">
 
   {existingMachine.pdf_url && (
@@ -755,6 +798,7 @@ return (
       }));
 
       setExistingMachine(null);
+      setMachineHistory([]);
     }}
   >
     Daten übernehmen
