@@ -970,6 +970,24 @@ meta: {
         },
 
         {
+          title: "Sichtprüfung - Hydraulikpumpe",
+          items: [
+            { label: "Ölstand", required: true },
+            { label: "Motortypenschild", required: true },
+            { label: "Motorseriennummer", required: true }
+          ]
+        },
+
+        {
+          title: "Sichtprüfung - Fahrmotor",
+          items: [
+            { label: "Motortypenschild", required: true },
+            { label: "Motorseriennummer", required: true },
+            { label: "Geräusche, Virbration", required: true }
+          ]
+        },
+
+        {
           title: "Sichtprüfung - Mast",
           items: [
             { label: "Mastart", required: true },
